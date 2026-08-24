@@ -13,8 +13,16 @@ export interface ConnectedAccount {
 }
 
 export type TaskPriority = 'high' | 'medium' | 'low';
-export type TaskCategory = 'Meeting' | 'Deadline' | 'Follow-up' | 'Reply Needed' | 'General';
-export type TaskStatus = 'todo' | 'in_progress' | 'done';
+export type TaskCategory =
+  | 'Meeting/Interview'
+  | 'Job/Internship offer'
+  | 'Event'
+  | 'Deadline'
+  | 'Reply Needed'
+  | 'Opportunity'
+  | 'General'
+  | 'Spam';
+export type TaskStatus = 'todo' | 'done';
 
 export interface EmailSource {
   id: string;

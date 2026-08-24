@@ -92,7 +92,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             onClick={() => setActiveTab('scanning')}
             className={`py-3 px-3 text-xs font-semibold border-b-2 transition-all ${
               activeTab === 'scanning'
-                ? 'border-indigo-600 text-indigo-600'
+                ? 'border-orange-600 text-orange-600'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -103,7 +103,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             onClick={() => setActiveTab('accounts')}
             className={`py-3 px-3 text-xs font-semibold border-b-2 transition-all ${
               activeTab === 'accounts'
-                ? 'border-indigo-600 text-indigo-600'
+                ? 'border-orange-600 text-orange-600'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -114,7 +114,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             onClick={() => setActiveTab('privacy')}
             className={`py-3 px-3 text-xs font-semibold border-b-2 transition-all ${
               activeTab === 'privacy'
-                ? 'border-indigo-600 text-indigo-600'
+                ? 'border-orange-600 text-orange-600'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -139,7 +139,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onClick={() => setScanRangeDays(days)}
                       className={`py-2 text-center rounded-lg border font-medium ${
                         scanRangeDays === days
-                          ? 'border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold'
+                          ? 'border-orange-600 bg-orange-50 text-orange-700 font-semibold'
                           : 'border-[#E7E7E4] hover:bg-slate-50 text-slate-600'
                       }`}
                     >
@@ -162,7 +162,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onClick={() => setScanLimit(limit)}
                       className={`py-2 text-center rounded-lg border font-medium ${
                         scanLimit === limit
-                          ? 'border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold'
+                          ? 'border-orange-600 bg-orange-50 text-orange-700 font-semibold'
                           : 'border-[#E7E7E4] hover:bg-slate-50 text-slate-600'
                       }`}
                     >
@@ -187,7 +187,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     type="checkbox"
                     checked={filterNewsletters}
                     onChange={(e) => setFilterNewsletters(e.target.checked)}
-                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
+                    className="rounded border-slate-300 text-orange-600 focus:ring-orange-500 w-4 h-4"
                   />
                 </label>
 
@@ -205,7 +205,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       type="checkbox"
                       checked={autoSync}
                       onChange={(e) => setAutoSync(e.target.checked)}
-                      className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
+                      className="rounded border-slate-300 text-orange-600 focus:ring-orange-500 w-4 h-4"
                     />
                   </label>
                 </div>
@@ -222,7 +222,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <button
                   type="button"
                   onClick={onOpenOAuthGuide}
-                  className="text-xs text-indigo-600 font-medium hover:underline inline-flex items-center gap-1"
+                  className="text-xs text-orange-600 font-medium hover:underline inline-flex items-center gap-1"
                 >
                   <Info className="w-3 h-3" />
                   <span>Setup Guide</span>
@@ -235,7 +235,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   className="p-3.5 rounded-xl border border-[#E7E7E4] bg-slate-50 flex items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs shrink-0">
+                    <div className="w-9 h-9 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-xs shrink-0">
                       {acc.name.charAt(0)}
                     </div>
                     <div className="min-w-0">
@@ -325,7 +325,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <button
               type="button"
               onClick={handleSave}
-              className="px-4 py-1.5 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm"
+              className="px-4 py-1.5 text-xs font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-lg shadow-sm"
             >
               Apply Settings
             </button>

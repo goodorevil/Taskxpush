@@ -30,7 +30,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
       case 'todo':
         return <ListTodo className="w-4 h-4 text-stone-500" />;
       case 'in_progress':
-        return <PlayCircle className="w-4 h-4 text-indigo-500" />;
+        return <PlayCircle className="w-4 h-4 text-orange-500" />;
       case 'done':
         return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
     }
@@ -70,7 +70,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
       onDrop={handleDrop}
       className={`flex flex-col flex-1 min-w-[280px] max-w-[420px] bg-stone-100/70 dark:bg-stone-900/50 rounded-2xl p-3 border transition-colors duration-150 ${
         isOver
-          ? 'border-indigo-400 bg-indigo-50/40 dark:bg-indigo-950/20 ring-2 ring-indigo-500/20'
+          ? 'border-orange-400 bg-orange-50/40 dark:bg-orange-950/20 ring-2 ring-orange-500/20'
           : 'border-stone-200/70 dark:border-stone-800'
       }`}
     >
@@ -123,7 +123,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
             <button
               type="button"
               onClick={() => onAddTaskClick(status)}
-              className="mt-2 text-xs text-indigo-600 hover:underline font-medium"
+              className="mt-2 text-xs text-orange-600 hover:underline font-medium"
             >
               + Create one
             </button>

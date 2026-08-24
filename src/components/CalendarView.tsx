@@ -246,7 +246,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
         <div className="flex items-center gap-2 sm:gap-4">
           <div className="hidden md:flex items-center gap-3 text-xs text-slate-500">
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-indigo-500" />
+              <span className="w-2 h-2 rounded-full bg-orange-500" />
               <span><strong>{monthStats.total}</strong> scheduled</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -262,7 +262,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
             onClick={() => setShowUnscheduledDrawer(!showUnscheduledDrawer)}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
               showUnscheduledDrawer
-                ? 'border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold'
+                ? 'border-orange-600 bg-orange-50 text-orange-700 font-semibold'
                 : 'border-[#E7E7E4] hover:bg-slate-50 text-slate-600'
             }`}
           >
@@ -270,7 +270,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
             <span>Unscheduled</span>
             {unscheduledTasks.length > 0 && (
               <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
-                showUnscheduledDrawer ? 'bg-indigo-200 text-indigo-800' : 'bg-slate-200 text-slate-700'
+                showUnscheduledDrawer ? 'bg-orange-200 text-orange-800' : 'bg-slate-200 text-slate-700'
               }`}>
                 {unscheduledTasks.length}
               </span>
@@ -312,14 +312,14 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                   onDrop={(e) => handleDrop(e, cell.dateStr)}
                   className={`group relative min-h-[96px] sm:min-h-[120px] p-1.5 sm:p-2 border-r border-[#E7E7E4] flex flex-col transition-colors ${
                     cell.isCurrentMonth ? 'bg-white' : 'bg-slate-50/50'
-                  } ${isCellToday ? 'bg-indigo-50/20' : ''} hover:bg-slate-50/80`}
+                  } ${isCellToday ? 'bg-orange-50/20' : ''} hover:bg-slate-50/80`}
                 >
                   {/* Day Number and Quick Actions */}
                   <div className="flex items-center justify-between mb-1">
                     <span
                       className={`inline-flex items-center justify-center text-xs font-semibold rounded-full w-6 h-6 ${
                         isCellToday
-                          ? 'bg-indigo-600 text-white font-bold shadow-xs'
+                          ? 'bg-orange-600 text-white font-bold shadow-xs'
                           : cell.isCurrentMonth
                           ? 'text-slate-800'
                           : 'text-slate-400'
@@ -340,7 +340,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                       <button
                         type="button"
                         onClick={() => onAddTaskForDate(cell.dateStr)}
-                        className="opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+                        className="opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-all"
                         title={`Add task for ${cell.dateStr}`}
                       >
                         <Plus className="w-3.5 h-3.5" />
@@ -412,7 +412,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                           e.stopPropagation();
                           setExpandedDayDate(cell.dateStr);
                         }}
-                        className="w-full text-left px-1.5 py-0.5 rounded text-[10px] font-semibold text-indigo-600 hover:bg-indigo-50 transition-colors"
+                        className="w-full text-left px-1.5 py-0.5 rounded text-[10px] font-semibold text-orange-600 hover:bg-orange-50 transition-colors"
                       >
                         +{dayTasks.length - 3} more
                       </button>
@@ -446,8 +446,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
               </button>
             </div>
 
-            <div className="p-2 text-[11px] text-slate-500 bg-indigo-50/50 border-b border-indigo-100/60 flex items-center gap-1.5 px-3">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+            <div className="p-2 text-[11px] text-slate-500 bg-orange-50/50 border-b border-orange-100/60 flex items-center gap-1.5 px-3">
+              <Sparkles className="w-3.5 h-3.5 text-orange-600 shrink-0" />
               <span>Drag any task onto a calendar date to schedule it.</span>
             </div>
 
@@ -483,7 +483,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                               e.stopPropagation();
                               if (onUpdateDueDate) onUpdateDueDate(task.id, todayStr);
                             }}
-                            className="text-[10px] font-semibold text-indigo-600 hover:bg-indigo-50 px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="text-[10px] font-semibold text-orange-600 hover:bg-orange-50 px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
                             title="Schedule for Today"
                           >
                             + Today
@@ -515,7 +515,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           <div className="w-full max-w-md bg-white rounded-xl border border-[#E7E7E4] shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#E7E7E4] bg-slate-50/50">
               <div className="flex items-center gap-2">
-                <CalendarIcon className="w-4 h-4 text-indigo-600" />
+                <CalendarIcon className="w-4 h-4 text-orange-600" />
                 <h3 className="text-sm font-bold text-slate-800">
                   Tasks for {new Date(expandedDayDate + 'T00:00:00').toLocaleDateString('en-US', {
                     weekday: 'short',
@@ -591,7 +591,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                   setExpandedDayDate(null);
                   onAddTaskForDate(targetDate);
                 }}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 hover:text-orange-700"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add task for this date</span>

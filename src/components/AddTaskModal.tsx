@@ -55,7 +55,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#E7E7E4]">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600">
+            <div className="p-1.5 rounded-lg bg-orange-50 text-orange-600">
               <Plus className="w-4 h-4" />
             </div>
             <h2 className="text-base font-bold text-slate-800">
@@ -85,7 +85,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
               placeholder="e.g. Approve marketing budget for Q4 campaign"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full text-sm bg-slate-50 border border-[#E7E7E4] rounded-lg px-3.5 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800"
+              className="w-full text-sm bg-slate-50 border border-[#E7E7E4] rounded-lg px-3.5 py-2.5 outline-none focus:ring-2 focus:ring-orange-500 text-slate-800"
             />
           </div>
 
@@ -98,7 +98,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
                 id="new-task-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value as TaskCategory)}
-                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-orange-500"
               >
                 <option value="General">General</option>
                 <option value="Meeting">Meeting</option>
@@ -116,7 +116,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
                 id="new-task-priority"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as TaskPriority)}
-                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-orange-500"
               >
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
@@ -135,7 +135,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
@@ -147,7 +147,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
                 id="new-task-status"
                 value={status}
                 onChange={(e) => setStatus(e.target.value as TaskStatus)}
-                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2 text-slate-800 outline-none focus:ring-2 focus:ring-orange-500"
               >
                 <option value="todo">To Do</option>
                 <option value="in_progress">In Progress</option>
@@ -166,7 +166,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
               placeholder="Add additional details or checklist items..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800"
+              className="w-full text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-orange-500 text-slate-800"
             />
           </div>
 
@@ -182,7 +182,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
             <button
               id="create-task-submit-btn"
               type="submit"
-              className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors"
+              className="px-4 py-2 text-xs font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-lg shadow-sm transition-colors"
             >
               Create Task
             </button>

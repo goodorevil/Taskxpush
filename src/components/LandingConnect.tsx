@@ -33,7 +33,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
       {/* Top Brand Bar */}
       <header className="w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-600/20">
+          <div className="w-8 h-8 rounded-xl bg-orange-600 flex items-center justify-center text-white shadow-sm shadow-orange-600/20">
             <Inbox className="w-4 h-4" />
           </div>
           <span className="text-base font-bold tracking-tight text-slate-900">
@@ -54,7 +54,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
       {/* Main Hero & Value Proposition */}
       <main className="w-full max-w-4xl mx-auto px-6 py-8 flex flex-col items-center text-center">
         {/* Scope pill */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-xs font-medium text-indigo-700 mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-xs font-medium text-orange-700 mb-6">
           <Sparkles className="w-3.5 h-3.5" />
           <span>AI-Powered Email-to-Action Engine</span>
         </div>
@@ -122,7 +122,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
             id="landing-try-demo-btn"
             type="button"
             onClick={onTryDemo}
-            className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:underline"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-orange-600 hover:underline"
           >
             <span>Explore Demo Workspace</span>
             <ArrowRight className="w-3 h-3" />
@@ -144,7 +144,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
           </div>
 
           <div className="p-4 rounded-xl bg-white border border-[#E7E7E4] shadow-xs">
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mb-2.5">
+            <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mb-2.5">
               <Clock className="w-4 h-4" />
             </div>
             <h4 className="text-xs font-semibold text-slate-800 mb-1">

@@ -88,7 +88,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               {category}
             </span>
             {task.confidence && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-indigo-50 text-indigo-700">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-orange-50 text-orange-700">
                 <Sparkles className="w-3 h-3" />
                 {Math.round(task.confidence * 100)}% AI Match
               </span>
@@ -133,7 +133,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               rows={2}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full text-base font-bold text-slate-800 bg-transparent border border-[#E7E7E4] rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full text-base font-bold text-slate-800 bg-transparent border border-[#E7E7E4] rounded-lg p-2.5 focus:ring-2 focus:ring-orange-500 outline-none"
             />
           </div>
 
@@ -146,7 +146,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                 id="task-status-select"
                 value={status}
                 onChange={(e) => setStatus(e.target.value as TaskStatus)}
-                className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1.5 px-2.5 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1.5 px-2.5 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-orange-500 outline-none"
               >
                 <option value="todo">To Do</option>
                 <option value="in_progress">In Progress</option>
@@ -161,7 +161,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                 id="task-priority-select"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as TaskPriority)}
-                className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1.5 px-2.5 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1.5 px-2.5 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-orange-500 outline-none"
               >
                 <option value="high">High Priority</option>
                 <option value="medium">Medium Priority</option>
@@ -176,7 +176,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                 id="task-category-select"
                 value={category}
                 onChange={(e) => setCategory(e.target.value as TaskCategory)}
-                className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1.5 px-2.5 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1.5 px-2.5 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-orange-500 outline-none"
               >
                 <option value="Meeting">Meeting</option>
                 <option value="Deadline">Deadline</option>
@@ -195,7 +195,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1 px-2 text-xs text-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full bg-white border border-[#E7E7E4] rounded-lg py-1 px-2 text-xs text-slate-800 focus:ring-2 focus:ring-orange-500 outline-none"
                 />
               </div>
             </div>
@@ -203,12 +203,12 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
 
           {/* AI Reason / Extraction Context */}
           {task.reason && (
-            <div className="p-3.5 rounded-xl bg-indigo-50/60 border border-indigo-100 text-xs">
-              <div className="flex items-center gap-1.5 font-bold text-indigo-900 mb-1">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+            <div className="p-3.5 rounded-xl bg-orange-50/60 border border-orange-100 text-xs">
+              <div className="flex items-center gap-1.5 font-bold text-orange-900 mb-1">
+                <Sparkles className="w-3.5 h-3.5 text-orange-600" />
                 <span>AI Extraction Reason</span>
               </div>
-              <p className="text-indigo-800 leading-relaxed">
+              <p className="text-orange-800 leading-relaxed">
                 {task.reason}
               </p>
             </div>
@@ -225,7 +225,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add additional context or notes here..."
-              className="w-full text-xs text-slate-800 bg-transparent border border-[#E7E7E4] rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none leading-relaxed"
+              className="w-full text-xs text-slate-800 bg-transparent border border-[#E7E7E4] rounded-lg p-2.5 focus:ring-2 focus:ring-orange-500 outline-none leading-relaxed"
             />
           </div>
 
@@ -241,7 +241,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   className="flex items-center justify-between gap-2 p-2 rounded-lg bg-slate-50 border border-[#E7E7E4] text-xs text-slate-800"
                 >
                   <div className="flex items-center gap-2">
-                    <CheckSquare className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                    <CheckSquare className="w-3.5 h-3.5 text-orange-600 shrink-0" />
                     <span>{item}</span>
                   </div>
                   <button
@@ -261,7 +261,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                 value={newActionItem}
                 onChange={(e) => setNewActionItem(e.target.value)}
                 placeholder="+ Add checklist step..."
-                className="flex-1 text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500"
+                className="flex-1 text-xs bg-slate-50 border border-[#E7E7E4] rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500"
               />
               <button
                 type="submit"
@@ -286,7 +286,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                     href={task.sourceEmail.webLink}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="inline-flex items-center gap-1 text-xs font-medium text-indigo-600 hover:underline"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-orange-600 hover:underline"
                   >
                     <span>Open in {task.sourceEmail.provider === 'gmail' ? 'Gmail' : 'Outlook'}</span>
                     <ExternalLink className="w-3 h-3" />
@@ -328,7 +328,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
             id="save-task-changes-btn"
             type="button"
             onClick={handleSave}
-            className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors shadow-sm"
+            className="px-4 py-2 text-xs font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors shadow-sm"
           >
             Save Changes
           </button>

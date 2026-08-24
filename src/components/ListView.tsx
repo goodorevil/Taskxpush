@@ -68,12 +68,12 @@ export const ListView: React.FC<ListViewProps> = ({
                     e.stopPropagation();
                     onStatusChange(task.id, isDone ? 'todo' : 'done');
                   }}
-                  className="text-slate-400 hover:text-indigo-600 transition-colors shrink-0"
+                  className="text-slate-400 hover:text-orange-600 transition-colors shrink-0"
                 >
                   {isDone ? (
                     <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-50" />
                   ) : (
-                    <Circle className="w-4 h-4 hover:stroke-indigo-600" />
+                    <Circle className="w-4 h-4 hover:stroke-orange-600" />
                   )}
                 </button>
 
@@ -126,7 +126,7 @@ export const ListView: React.FC<ListViewProps> = ({
                     task.status === 'done'
                       ? 'bg-emerald-50 text-emerald-700'
                       : task.status === 'in_progress'
-                      ? 'bg-indigo-50 text-indigo-700'
+                      ? 'bg-orange-50 text-orange-700'
                       : 'bg-slate-100 text-slate-600'
                   }`}
                 >

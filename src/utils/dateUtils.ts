@@ -103,33 +103,54 @@ export function getCategoryStyle(category: TaskCategory): {
   dotColor: string;
 } {
   switch (category) {
-    case 'Meeting':
+    case 'Meeting/Interview':
       return {
-        bg: 'bg-indigo-50',
-        text: 'text-indigo-700',
-        border: 'border-indigo-100',
-        dotColor: 'bg-indigo-500'
+        bg: 'bg-sky-50',
+        text: 'text-sky-700',
+        border: 'border-sky-100',
+        dotColor: 'bg-sky-500'
       };
-    case 'Deadline':
-      return {
-        bg: 'bg-orange-50',
-        text: 'text-orange-700',
-        border: 'border-orange-100',
-        dotColor: 'bg-orange-500'
-      };
-    case 'Reply Needed':
+    case 'Job/Internship offer':
       return {
         bg: 'bg-emerald-50',
         text: 'text-emerald-700',
         border: 'border-emerald-100',
         dotColor: 'bg-emerald-500'
       };
-    case 'Follow-up':
+    case 'Event':
+      return {
+        bg: 'bg-pink-50',
+        text: 'text-pink-700',
+        border: 'border-pink-100',
+        dotColor: 'bg-pink-500'
+      };
+    case 'Deadline':
+      return {
+        bg: 'bg-red-50',
+        text: 'text-red-700',
+        border: 'border-red-100',
+        dotColor: 'bg-red-500'
+      };
+    case 'Reply Needed':
       return {
         bg: 'bg-amber-50',
         text: 'text-amber-700',
         border: 'border-amber-100',
         dotColor: 'bg-amber-500'
+      };
+    case 'Opportunity':
+      return {
+        bg: 'bg-teal-50',
+        text: 'text-teal-700',
+        border: 'border-teal-100',
+        dotColor: 'bg-teal-500'
+      };
+    case 'Spam':
+      return {
+        bg: 'bg-stone-100',
+        text: 'text-stone-500',
+        border: 'border-stone-200',
+        dotColor: 'bg-stone-400'
       };
     case 'General':
     default:

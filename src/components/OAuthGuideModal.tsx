@@ -18,7 +18,7 @@ export const OAuthGuideModal: React.FC<OAuthGuideModalProps> = ({ isOpen, onClos
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#E7E7E4] bg-slate-50/50">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600">
+            <div className="p-1.5 rounded-lg bg-orange-50 text-orange-600">
               <Key className="w-4 h-4" />
             </div>
             <h2 className="text-base font-bold text-slate-800">
@@ -55,7 +55,7 @@ export const OAuthGuideModal: React.FC<OAuthGuideModalProps> = ({ isOpen, onClos
             </h3>
             <ol className="list-decimal list-inside space-y-1.5 pl-1">
               <li>
-                Navigate to <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer" className="text-indigo-600 font-medium hover:underline inline-flex items-center gap-0.5">Google Cloud Console <ExternalLink className="w-2.5 h-2.5" /></a> and enable the <strong>Gmail API</strong>.
+                Navigate to <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer" className="text-orange-600 font-medium hover:underline inline-flex items-center gap-0.5">Google Cloud Console <ExternalLink className="w-2.5 h-2.5" /></a> and enable the <strong>Gmail API</strong>.
               </li>
               <li>
                 Under <strong>OAuth Consent Screen</strong>, set Publishing Status to <em>Testing</em> and add your email to <strong>Test Users</strong>.
@@ -80,7 +80,7 @@ export const OAuthGuideModal: React.FC<OAuthGuideModalProps> = ({ isOpen, onClos
             </h3>
             <ol className="list-decimal list-inside space-y-1.5 pl-1">
               <li>
-                Visit <a href="https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank" rel="noreferrer" className="text-indigo-600 font-medium hover:underline inline-flex items-center gap-0.5">Azure App Registrations <ExternalLink className="w-2.5 h-2.5" /></a>.
+                Visit <a href="https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank" rel="noreferrer" className="text-orange-600 font-medium hover:underline inline-flex items-center gap-0.5">Azure App Registrations <ExternalLink className="w-2.5 h-2.5" /></a>.
               </li>
               <li>
                 Register an app with Supported Account Types: <em>Accounts in any organizational directory and personal Microsoft accounts</em>.
@@ -115,7 +115,7 @@ export const OAuthGuideModal: React.FC<OAuthGuideModalProps> = ({ isOpen, onClos
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
+            className="px-4 py-2 text-xs font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors"
           >
             Understood
           </button>

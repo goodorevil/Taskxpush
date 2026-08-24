@@ -61,11 +61,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
 
   const categories: { label: TaskCategory; icon: any }[] = [
-    { label: 'Meeting', icon: CalendarIcon },
+    { label: 'Meeting/Interview', icon: CalendarIcon },
+    { label: 'Job/Internship offer', icon: Tag },
+    { label: 'Event', icon: Layers },
     { label: 'Deadline', icon: Clock },
     { label: 'Reply Needed', icon: MessageSquare },
-    { label: 'Follow-up', icon: Tag },
+    { label: 'Opportunity', icon: Tag },
     { label: 'General', icon: Layers },
+    { label: 'Spam', icon: Layers },
   ];
 
   const getCategoryCount = (cat: TaskCategory) => {
@@ -95,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Top Branding */}
         <div className="p-4 border-b border-[#E7E7E4] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-600/25">
+            <div className="w-8 h-8 rounded-xl bg-orange-600 flex items-center justify-center text-white shadow-sm shadow-orange-600/25">
               <Inbox className="w-4 h-4" />
             </div>
             <div>
@@ -139,7 +142,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <LayoutGrid className="w-3.5 h-3.5 text-indigo-600" />
+                    <LayoutGrid className="w-3.5 h-3.5 text-orange-600" />
                     <span>Kanban Board</span>
                   </div>
                 </button>
@@ -157,7 +160,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <List className="w-3.5 h-3.5 text-indigo-600" />
+                    <List className="w-3.5 h-3.5 text-orange-600" />
                     <span>Compact List</span>
                   </div>
                 </button>
@@ -175,7 +178,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <CalendarIcon className="w-3.5 h-3.5 text-indigo-600" />
+                    <CalendarIcon className="w-3.5 h-3.5 text-orange-600" />
                     <span>Monthly Calendar</span>
                   </div>
                   <span className="text-[11px] text-slate-400">{scheduledCount}</span>
@@ -219,7 +222,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+                  <Sparkles className="w-3.5 h-3.5 text-orange-500" />
                   <span>Active To-Dos</span>
                 </div>
                 <span className="text-[11px] text-slate-400">{activeCount}</span>
@@ -313,11 +316,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     {activeAccount.name.charAt(0)}
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs font-semibold text-slate-900 block truncate">
+                    <span className="text-xs font-semibold text-slate-900 flex items-center gap-1.5 truncate">
                       {activeAccount.name}
+                      {activeAccount.isTestMode && (
+                        <span className="text-[9px] font-bold uppercase tracking-wide text-orange-700 bg-orange-50 border border-orange-100 rounded px-1 py-0.5 shrink-0">
+                          Demo
+                        </span>
+                      )}
                     </span>
                     <span className="text-[10px] text-slate-500 block truncate">
-                      {activeAccount.email}
+                      {activeAccount.isTestMode ? 'Sample data, not your real inbox' : activeAccount.email}
                     </span>
                   </div>
                 </div>
@@ -343,7 +351,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       }}
                       className={`w-full text-left px-2 py-1.5 rounded-lg flex items-center justify-between ${
                         acc.id === activeAccount.id
-                          ? 'bg-indigo-50 text-indigo-700 font-medium'
+                          ? 'bg-orange-50 text-orange-700 font-medium'
                           : 'hover:bg-slate-100 text-slate-700'
                       }`}
                     >
@@ -359,7 +367,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         onConnectNew();
                         setIsAccountDropdownOpen(false);
                       }}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-indigo-600 hover:bg-indigo-50 flex items-center gap-1.5 font-medium"
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-orange-600 hover:bg-orange-50 flex items-center gap-1.5 font-medium"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Connect another account</span>
@@ -383,7 +391,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               type="button"
               onClick={onConnectNew}
-              className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-colors"
+              className="w-full py-2 px-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Connect Account</span>

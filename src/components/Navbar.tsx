@@ -56,7 +56,16 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => clearInterval(interval);
   }, [lastSyncedAt]);
 
-  const categories: TaskCategory[] = ['Meeting', 'Deadline', 'Follow-up', 'Reply Needed', 'General'];
+  const categories: TaskCategory[] = [
+    'Meeting/Interview',
+    'Job/Internship offer',
+    'Event',
+    'Deadline',
+    'Reply Needed',
+    'Opportunity',
+    'General',
+    'Spam',
+  ];
 
   return (
     <header className="flex flex-col border-b border-[#E7E7E4] bg-[#FAFAF9] z-10">
@@ -81,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               placeholder="Search tasks, senders, or subjects..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full bg-white border border-[#E7E7E4] rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-2xs"
+              className="w-full bg-white border border-[#E7E7E4] rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 outline-none focus:ring-2 focus:ring-orange-500/50 shadow-2xs"
             />
           </div>
         </div>
@@ -98,8 +107,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               type="button"
               disabled={isScanning}
               onClick={onRefresh}
-              className={`p-1 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-slate-200/60 transition-colors ${
-                isScanning ? 'animate-spin text-indigo-600' : ''
+              className={`p-1 rounded-lg text-slate-500 hover:text-orange-600 hover:bg-slate-200/60 transition-colors ${
+                isScanning ? 'animate-spin text-orange-600' : ''
               }`}
               title="Re-scan inbox for new actionable emails"
             >
@@ -155,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="navbar-add-task-btn"
             type="button"
             onClick={onOpenAddTask}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0"
           >
             <Plus className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Add Task</span>

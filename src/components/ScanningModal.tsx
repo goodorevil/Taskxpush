@@ -22,9 +22,9 @@ export const ScanningModal: React.FC<ScanningModalProps> = ({ progress, onCancel
       >
         {/* Top visual indicator */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600">
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-orange-50 text-orange-600">
             <Loader2 className="w-5 h-5 animate-spin" />
-            <Sparkles className="w-3 h-3 absolute top-1 right-1 text-indigo-500" />
+            <Sparkles className="w-3 h-3 absolute top-1 right-1 text-orange-500" />
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-800">
@@ -46,7 +46,7 @@ export const ScanningModal: React.FC<ScanningModalProps> = ({ progress, onCancel
           </div>
           <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-indigo-600 transition-all duration-300 ease-out"
+              className="h-full bg-orange-600 transition-all duration-300 ease-out"
               style={{ width: `${percent}%` }}
             />
           </div>

@@ -179,7 +179,7 @@ Marcus`,
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   app.use(express.json({ limit: "10mb" }));
 
@@ -235,22 +235,30 @@ async function startServer() {
         content: (em.fullBody || em.snippet || "").slice(0, 1500)
       }));
 
-      const systemPrompt = `You are InboxFlow AI, an intelligent executive email assistant.
-Your job is to scan incoming emails and determine which ones contain ACTIONABLE TASKS for the recipient (things the user needs to do, reply to, review, sign, attend, or follow up on).
+      const systemPrompt = `You are InboxFlow AI, an intelligent email sorting assistant.
+Your job is to scan incoming emails and sort EVERY SINGLE ONE into exactly one category. Nothing gets dropped or hidden - every email must end up somewhere.
 
 Current Date Reference: ${today} (Year-Month-Day).
 
 RULES:
-1. FILTER OUT NOISE: Explicitly mark actionable=false for newsletters, marketing promotions, automated receipts with no action required, spam, security login notices, and shipping notifications unless user action is required.
-2. ACTIONABLE ITEMS: Mark actionable=true ONLY if there is a concrete action requested from or owed by the user (e.g. review a document, reply with info, attend a meeting, pay an overdue invoice, fix a bug, follow up with a person).
-3. TASK TITLE: Keep it concise, imperative, and specific (e.g. "Review Section 4.2 of TechCorp MSA", "Reply to Elena with beta invite link", "Submit interview rubric feedback for Alex Rivera").
-4. DUE DATE: If a deadline or relative date is mentioned (e.g. "this Friday", "by 5 PM tomorrow", "next Monday", "before end of day Thursday"), calculate the exact YYYY-MM-DD date based on Current Date Reference (${today}). If no date is mentioned, set dueDate to null.
+1. SORT, DON'T FILTER: Every email gets a category and a taskTitle, even if it doesn't require action. Newsletters, marketing, and promotional emails go in "Spam". Automated receipts, notifications, and anything with no real relevance go in "General". Never omit an email from the results.
+2. ACTIONABLE FLAG: Set actionable=true if there is a concrete action requested from or owed by the user (e.g. review a document, reply with info, attend a meeting, pay an overdue invoice, apply by a deadline). Set actionable=false for informational/promotional content - but still give it a category and title.
+3. TASK TITLE: Keep it concise, imperative, and specific (e.g. "Review Section 4.2 of TechCorp MSA", "Reply to Elena with beta invite link"). For non-actionable emails, the title can simply be a short summary of the email (e.g. "Weekly newsletter from TechCrunch").
+4. DUE DATE: If a deadline or relative date is mentioned (e.g. "this Friday", "by 5 PM tomorrow", "next Monday"), calculate the exact YYYY-MM-DD date based on Current Date Reference (${today}). If no date is mentioned, set dueDate to null.
 5. PRIORITY:
    - "high": Urgent deadlines (within 24-48h), legal/finance/billing risk, blocker bugs, executive requests.
    - "medium": Standard requests with reasonable deadlines (within 3-7 days), meeting preparations, scheduled interviews.
-   - "low": Low urgency follow-ups, general tasks without rigid time constraints.
-6. CATEGORY: Exactly one of: "Meeting" | "Deadline" | "Follow-up" | "Reply Needed" | "General".
-7. CONFIDENCE: Float from 0.0 to 1.0 representing how confident you are that this is an actionable task.`;
+   - "low": Low urgency follow-ups, general tasks, or anything non-actionable.
+6. CATEGORY: Exactly one of these 8 values:
+   - "Meeting/Interview": calls, interviews, scheduled meetings.
+   - "Job/Internship offer": job or internship offers, recruiter outreach, hiring decisions.
+   - "Event": invitations to events, webinars, conferences, meetups.
+   - "Deadline": time-bound deliverables, submissions, payments due.
+   - "Reply Needed": someone is waiting on a reply, question, or confirmation from the user.
+   - "Opportunity": apply-by items like scholarships, grants, calls for proposals, competitions.
+   - "General": anything relevant but not fitting another category.
+   - "Spam": newsletters, marketing, promotions, or anything low-value/noisy.
+7. CONFIDENCE: Float from 0.0 to 1.0 representing how confident you are in the classification.`;
 
       const userContent = `Analyze the following ${formattedEmailBatch.length} emails and extract tasks for each one:
 
@@ -277,7 +285,7 @@ ${JSON.stringify(formattedEmailBatch, null, 2)}`;
                   dueDate: { type: Type.STRING, description: "YYYY-MM-DD due date if mentioned, or empty string", nullable: true },
                   dueTime: { type: Type.STRING, description: "HH:MM time if mentioned (e.g. '17:00' or '14:00')", nullable: true },
                   priority: { type: Type.STRING, description: "Priority level: 'high', 'medium', or 'low'" },
-                  category: { type: Type.STRING, description: "Category: 'Meeting', 'Deadline', 'Follow-up', 'Reply Needed', or 'General'" },
+                  category: { type: Type.STRING, description: "One of: 'Meeting/Interview', 'Job/Internship offer', 'Event', 'Deadline', 'Reply Needed', 'Opportunity', 'General', 'Spam'" },
                   description: { type: Type.STRING, description: "Brief 1-2 sentence context summary of what needs to be done" },
                   actionItems: {
                     type: Type.ARRAY,
@@ -315,7 +323,10 @@ ${JSON.stringify(formattedEmailBatch, null, 2)}`;
               dueDate: match.dueDate && match.dueDate !== "" ? match.dueDate : null,
               dueTime: match.dueTime && match.dueTime !== "" ? match.dueTime : null,
               priority: (['high', 'medium', 'low'].includes(match.priority?.toLowerCase()) ? match.priority.toLowerCase() : 'medium'),
-              category: (['Meeting', 'Deadline', 'Follow-up', 'Reply Needed', 'General'].includes(match.category) ? match.category : 'General'),
+              category: ([
+                'Meeting/Interview', 'Job/Internship offer', 'Event', 'Deadline',
+                'Reply Needed', 'Opportunity', 'General', 'Spam'
+              ].includes(match.category) ? match.category : 'General'),
               description: match.description || email.snippet,
               actionItems: match.actionItems || [],
               confidence: typeof match.confidence === 'number' ? match.confidence : 0.85,
@@ -386,13 +397,16 @@ function fallbackRuleExtractor(email: any, todayStr: string) {
       emailId: email.id,
       threadId: email.threadId,
       actionable: false,
+      taskTitle: email.subject || "Newsletter / marketing email",
+      priority: 'low',
+      category: isNewsletter ? 'Spam' : 'General',
       confidence: 0.95,
       skipReason: isNewsletter ? "Newsletter / Marketing digest" : "Automated receipt with no required action"
     };
   }
 
   let priority: 'high' | 'medium' | 'low' = 'medium';
-  let category: 'Meeting' | 'Deadline' | 'Follow-up' | 'Reply Needed' | 'General' = 'General';
+  let category: 'Meeting/Interview' | 'Job/Internship offer' | 'Event' | 'Deadline' | 'Reply Needed' | 'Opportunity' | 'General' | 'Spam' = 'General';
   let dueDate: string | null = null;
   let dueTime: string | null = null;
   let taskTitle = email.subject || "Follow up on email";
@@ -405,32 +419,33 @@ function fallbackRuleExtractor(email: any, todayStr: string) {
     priority = 'low';
   }
 
-  if (text.includes("meet") || text.includes("call") || text.includes("interview") || text.includes("sync") || text.includes("schedule")) {
-    category = 'Meeting';
+  if (text.includes("interview") || text.includes("meet") || text.includes("call") || text.includes("sync") || text.includes("schedule")) {
+    category = 'Meeting/Interview';
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     dueDate = tomorrow.toISOString().split("T")[0];
     dueTime = text.includes("2:00") ? "14:00" : (text.includes("11:00") ? "11:00" : "10:00");
+  } else if (text.includes("offer letter") || text.includes("internship") || text.includes("we'd like to offer") || text.includes("job offer")) {
+    category = 'Job/Internship offer';
+  } else if (text.includes("invite you") || text.includes("webinar") || text.includes("conference") || text.includes("meetup")) {
+    category = 'Event';
   } else if (text.includes("deadline") || text.includes("by friday") || text.includes("due") || text.includes("before 5")) {
     category = 'Deadline';
     const due = new Date(today);
     due.setDate(due.getDate() + 2);
     dueDate = due.toISOString().split("T")[0];
     dueTime = "17:00";
+  } else if (text.includes("scholarship") || text.includes("apply by") || text.includes("call for proposals") || text.includes("grant")) {
+    category = 'Opportunity';
   } else if (text.includes("reply") || text.includes("feedback") || text.includes("share") || text.includes("send over")) {
     category = 'Reply Needed';
     const due = new Date(today);
     due.setDate(due.getDate() + 1);
     dueDate = due.toISOString().split("T")[0];
-  } else if (text.includes("follow up") || text.includes("check in")) {
-    category = 'Follow-up';
-    const due = new Date(today);
-    due.setDate(due.getDate() + 3);
-    dueDate = due.toISOString().split("T")[0];
   }
 
   // Refine title
-  if (category === 'Meeting') {
+  if (category === 'Meeting/Interview') {
     taskTitle = `Attend / prepare: ${email.subject.replace(/^(invite|call|sync):\s*/i, "")}`;
   } else if (category === 'Deadline') {
     taskTitle = `Review & finalize: ${email.subject.replace(/^(urgent|action required):\s*/i, "")}`;

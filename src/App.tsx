@@ -36,9 +36,7 @@ import { requestOutlookOAuthToken, fetchOutlookMessages } from './services/outlo
 
 import { Sidebar } from './components/Sidebar';
 import { Navbar } from './components/Navbar';
-import { KanbanBoard } from './components/KanbanBoard';
-import { ListView } from './components/ListView';
-import { CalendarView } from './components/CalendarView';
+import { CategoryTabs } from './components/CategoryTabs';
 import { TaskDetailModal } from './components/TaskDetailModal';
 import { AddTaskModal } from './components/AddTaskModal';
 import { ScanningModal } from './components/ScanningModal';
@@ -195,9 +193,9 @@ export default function App() {
   const handleTryDemo = () => {
     const demoAcc: ConnectedAccount = {
       id: 'acc-demo-gmail',
-      provider: 'gmail',
-      email: 'saurabhkdubey.work@gmail.com',
-      name: 'Saurabh Dubey',
+      provider: 'demo',
+      email: 'demo-workspace@example.com',
+      name: 'Demo workspace (sample data)',
       connectedAt: new Date().toISOString(),
       lastSyncedAt: new Date().toISOString(),
       isTestMode: true,
@@ -208,7 +206,7 @@ export default function App() {
     }
     setActiveAccountIdState(demoAcc.id);
     setActiveAccountId(demoAcc.id);
-    showToast('Loaded Demo Workspace with sample emails', 'success');
+    showToast('Loaded demo workspace with sample emails - this is not your real inbox', 'info');
   };
 
   // Scan & Extract Actionable Tasks
@@ -285,10 +283,10 @@ export default function App() {
 
           for (const res of extractionRes.results) {
             const originalEmail = batch.find((e) => e.id === res.emailId || e.threadId === res.threadId);
-            if (res.actionable && res.taskTitle) {
+            {
               const newTask: InboxTask = {
                 id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
-                title: res.taskTitle,
+                title: res.taskTitle || originalEmail?.subject || '(No subject)',
                 description: res.description || originalEmail?.snippet,
                 dueDate: res.dueDate || null,
                 dueTime: res.dueTime || null,
@@ -304,8 +302,6 @@ export default function App() {
                 accountId: targetAccount.id,
               };
               newTasks.push(newTask);
-            } else {
-              skippedCount++;
             }
           }
 
@@ -341,9 +337,9 @@ export default function App() {
             spread: 60,
             origin: { y: 0.7 },
           });
-          showToast(`Extracted ${newTasks.length} actionable tasks from your inbox!`, 'success');
+          showToast(`Sorted ${newTasks.length} emails into your categories!`, 'success');
         } else {
-          showToast('Scan complete. No actionable tasks found in recent messages.', 'info');
+          showToast('Scan complete. No new emails to sort.', 'info');
         }
       } catch (scanError: any) {
         console.error('Scan error:', scanError);
@@ -392,6 +388,15 @@ export default function App() {
   // Drag & Drop
   const handleDropTask = (taskId: string, targetStatus: TaskStatus) => {
     handleStatusChange(taskId, targetStatus);
+  };
+
+  // Manual category override
+  const handleCategoryChange = (taskId: string, newCategory: TaskCategory) => {
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === taskId ? { ...t, category: newCategory, updatedAt: new Date().toISOString() } : t
+      )
+    );
   };
 
   // Add Manual Task
@@ -591,37 +596,12 @@ export default function App() {
 
         {/* Dashboard Workspace */}
         <main className="flex-1 p-4 lg:p-6 overflow-y-auto flex flex-col min-h-0">
-          {viewMode === 'kanban' ? (
-            <KanbanBoard
-              tasks={filteredTasks}
-              onTaskClick={setSelectedTask}
-              onStatusChange={handleStatusChange}
-              onDropTask={handleDropTask}
-              onAddTaskClick={(status) => {
-                setAddTaskDefaultStatus(status);
-                setAddTaskDefaultDueDate(undefined);
-                setIsAddTaskOpen(true);
-              }}
-            />
-          ) : viewMode === 'list' ? (
-            <ListView
-              tasks={filteredTasks}
-              onTaskClick={setSelectedTask}
-              onStatusChange={handleStatusChange}
-            />
-          ) : (
-            <CalendarView
-              tasks={filteredTasks}
-              onTaskClick={setSelectedTask}
-              onStatusChange={handleStatusChange}
-              onUpdateDueDate={handleUpdateDueDate}
-              onAddTaskForDate={(dateStr) => {
-                setAddTaskDefaultDueDate(dateStr);
-                setAddTaskDefaultStatus('todo');
-                setIsAddTaskOpen(true);
-              }}
-            />
-          )}
+          <CategoryTabs
+            tasks={filteredTasks}
+            onTaskClick={setSelectedTask}
+            onStatusChange={handleStatusChange}
+            onCategoryChange={handleCategoryChange}
+          />
         </main>
       </div>
 

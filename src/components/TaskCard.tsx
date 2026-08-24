@@ -58,13 +58,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({
       onClick={onClick}
       className={`group relative flex flex-col p-4 rounded-xl cursor-pointer select-none transition-all duration-150 gap-3 ${
         isDragging
-          ? 'opacity-40 shadow-none ring-2 ring-indigo-500/50'
+          ? 'opacity-40 shadow-none ring-2 ring-orange-500/50'
           : 'active:scale-[0.99]'
       } ${
         isDone
           ? 'bg-slate-50 border border-dashed border-[#E7E7E4] grayscale opacity-80 shadow-none'
           : isInProgress
-          ? 'bg-white border border-indigo-200 shadow-md border-l-4 border-l-indigo-500 hover:shadow-lg'
+          ? 'bg-white border border-orange-200 shadow-md border-l-4 border-l-orange-500 hover:shadow-lg'
           : 'bg-white border border-[#E7E7E4] shadow-sm hover:shadow-md hover:border-slate-300'
       }`}
     >
@@ -104,13 +104,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           id={`task-toggle-${task.id}`}
           type="button"
           onClick={handleCheckboxClick}
-          className="mt-0.5 shrink-0 text-slate-400 hover:text-indigo-600 transition-colors focus:outline-none"
+          className="mt-0.5 shrink-0 text-slate-400 hover:text-orange-600 transition-colors focus:outline-none"
           title={isDone ? 'Mark as incomplete' : 'Mark as completed'}
         >
           {isDone ? (
             <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-50" />
           ) : (
-            <Circle className="w-4 h-4 hover:stroke-indigo-600" />
+            <Circle className="w-4 h-4 hover:stroke-orange-600" />
           )}
         </button>
 
@@ -137,7 +137,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
         {/* Source info / Sender Avatar */}
         {task.sourceEmail ? (
           <div className="flex items-center gap-1.5 min-w-0 max-w-[65%]">
-            <div className="w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center text-[9px] text-white font-bold shrink-0">
+            <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-[9px] text-white font-bold shrink-0">
               {getSenderInitials(task.sourceEmail.senderName)}
             </div>
             <span
@@ -153,7 +153,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 target="_blank"
                 rel="noreferrer noopener"
                 onClick={handleLinkClick}
-                className="text-slate-400 hover:text-indigo-600 p-0.5 rounded transition-colors shrink-0"
+                className="text-slate-400 hover:text-orange-600 p-0.5 rounded transition-colors shrink-0"
                 title={`Open email: "${task.sourceEmail.subject}"`}
               >
                 <ExternalLink className="w-2.5 h-2.5" />
