@@ -238,7 +238,17 @@ export default function App() {
           emails = await fetchSampleInbox();
         }
 
+        const touchLastSynced = () => {
+          const nowIso = new Date().toISOString();
+          const updatedAccounts = accounts.map((acc) =>
+            acc.id === targetAccount.id ? { ...acc, lastSyncedAt: nowIso } : acc
+          );
+          setAccounts(updatedAccounts);
+          saveStoredAccounts(updatedAccounts);
+        };
+
         if (emails.length === 0) {
+          touchLastSynced();
           setScanProgress((prev) => ({ ...prev, isScanning: false }));
           showToast('No new emails found in scan range.', 'info');
           return;
@@ -249,6 +259,7 @@ export default function App() {
         const unProcessedEmails = emails.filter((em) => !processedSet.has(em.threadId));
 
         if (unProcessedEmails.length === 0) {
+          touchLastSynced();
           setScanProgress((prev) => ({ ...prev, isScanning: false }));
           showToast('Inbox is up to date. All recent emails have already been scanned.', 'success');
           return;
@@ -312,11 +323,7 @@ export default function App() {
         recordProcessedThreads(unProcessedEmails.map((e) => e.threadId));
 
         // Update active account last synced timestamp
-        const nowIso = new Date().toISOString();
-        const updatedAccounts = accounts.map((acc) =>
-          acc.id === targetAccount.id ? { ...acc, lastSyncedAt: nowIso } : acc
-        );
-        setAccounts(updatedAccounts);
+        touchLastSynced();
 
         // Prepend new tasks & save
         setTasks((prev) => {
