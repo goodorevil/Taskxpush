@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { 
-  X, 
-  Sparkles, 
   Check, 
   ArrowRight, 
   Sliders, 
-  Mail, 
   ShieldCheck, 
   CheckCircle2,
   Calendar,
-  Layers
+  Layers,
+  Inbox
 } from 'lucide-react';
 import { ScanConfig } from '../types';
 
@@ -25,10 +23,9 @@ interface OnboardingFlowProps {
 export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
   isOpen,
   onClose,
-  config,
   onSaveConfig,
+  config,
   onStartFirstScan,
-  userEmail,
 }) => {
   if (!isOpen) return null;
 
@@ -66,15 +63,15 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
             {[1, 2, 3].map((s) => (
               <div key={s} className="flex items-center gap-1.5">
                 <div
-                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
+                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                     step === s
-                      ? 'bg-orange-600 text-white ring-2 ring-orange-500/30'
+                      ? 'bg-[#C2542D] text-white'
                       : step > s
                       ? 'bg-emerald-100 text-emerald-700'
                       : 'bg-slate-100 text-slate-400'
                   }`}
                 >
-                  {step > s ? <Check className="w-3 h-3" /> : s}
+                  {step > s ? <Check className="w-3.5 h-3.5 stroke-[2.5]" /> : s}
                 </div>
                 {s < 3 && <div className="w-6 h-0.5 bg-slate-200" />}
               </div>
@@ -84,7 +81,7 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="text-xs font-medium text-slate-400 hover:text-slate-700"
+            className="text-xs font-semibold text-slate-400 hover:text-slate-700 min-h-[44px] px-2 flex items-center"
           >
             Skip Tutorial
           </button>
@@ -94,7 +91,7 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
         <div className="p-6">
           {step === 1 && (
             <div className="space-y-4">
-              <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-1">
+              <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#C2542D] flex items-center justify-center mb-1">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h2 className="text-lg font-bold text-slate-800">
@@ -105,14 +102,14 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
               </p>
 
               <div className="p-3.5 rounded-xl bg-slate-50 border border-[#E7E7E4] space-y-2 text-xs">
-                <div className="font-semibold text-slate-800">
+                <div className="font-bold text-slate-800">
                   Privacy & Data Safety:
                 </div>
-                <div className="flex items-start gap-2 text-slate-600">
+                <div className="flex items-start gap-2 text-slate-600 font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>Read-only scope — InboxFlow cannot delete or send emails.</span>
                 </div>
-                <div className="flex items-start gap-2 text-slate-600">
+                <div className="flex items-start gap-2 text-slate-600 font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>Zero email storage — only extracted task titles and dates are saved.</span>
                 </div>
@@ -122,14 +119,14 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
 
           {step === 2 && (
             <div className="space-y-4">
-              <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-1">
+              <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#C2542D] flex items-center justify-center mb-1">
                 <Sliders className="w-5 h-5" />
               </div>
               <h2 className="text-lg font-bold text-slate-800">
                 Configure Your First Scan
               </h2>
               <p className="text-xs text-slate-600">
-                Set how far back and how deep you want the initial AI pass to scan.
+                Set how far back and how deep you want the initial pass to scan.
               </p>
 
               <div className="space-y-3.5 pt-1">
@@ -143,9 +140,9 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                         key={days}
                         type="button"
                         onClick={() => setScanRangeDays(days)}
-                        className={`py-2 px-3 text-xs font-medium rounded-lg border transition-all ${
+                        className={`py-2.5 px-3 text-xs font-semibold rounded-xl border transition-all min-h-[44px] ${
                           scanRangeDays === days
-                            ? 'border-orange-600 bg-orange-50 text-orange-700 font-semibold'
+                            ? 'border-[#C2542D] bg-orange-50 text-[#C2542D] font-bold'
                             : 'border-[#E7E7E4] hover:bg-slate-50 text-slate-700'
                         }`}
                       >
@@ -165,9 +162,9 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                         key={limit}
                         type="button"
                         onClick={() => setScanLimit(limit)}
-                        className={`py-2 px-3 text-xs font-medium rounded-lg border transition-all ${
+                        className={`py-2.5 px-3 text-xs font-semibold rounded-xl border transition-all min-h-[44px] ${
                           scanLimit === limit
-                            ? 'border-orange-600 bg-orange-50 text-orange-700 font-semibold'
+                            ? 'border-[#C2542D] bg-orange-50 text-[#C2542D] font-bold'
                             : 'border-[#E7E7E4] hover:bg-slate-50 text-slate-700'
                         }`}
                       >
@@ -178,12 +175,12 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 </div>
 
                 <div className="pt-2">
-                  <label className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer">
+                  <label className="flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer min-h-[44px]">
                     <input
                       type="checkbox"
                       checked={filterNewsletters}
                       onChange={(e) => setFilterNewsletters(e.target.checked)}
-                      className="rounded border-slate-300 text-orange-600 focus:ring-orange-500"
+                      className="rounded border-slate-300 text-[#C2542D] focus:ring-[#C2542D] w-4 h-4"
                     />
                     <span>Automatically skip marketing newsletters and receipts</span>
                   </label>
@@ -194,8 +191,8 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
 
           {step === 3 && (
             <div className="space-y-4">
-              <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-1">
-                <Sparkles className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#C2542D] flex items-center justify-center mb-1">
+                <Inbox className="w-5 h-5" />
               </div>
               <h2 className="text-lg font-bold text-slate-800">
                 You're Ready to Flow
@@ -205,23 +202,23 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
               </p>
 
               <div className="space-y-2 text-xs">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-[#E7E7E4] flex items-center gap-2.5">
-                  <div className="p-1 rounded bg-orange-100 text-orange-600">
-                    <Layers className="w-3.5 h-3.5" />
+                <div className="p-3 rounded-xl bg-slate-50 border border-[#E7E7E4] flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-orange-100 text-[#C2542D]">
+                    <Layers className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-semibold text-slate-800">Kanban & List views</span>
-                    <p className="text-slate-500 text-[11px]">Drag tasks between To Do, In Progress, and Done.</p>
+                    <span className="font-bold text-slate-800">8 Category Workspace</span>
+                    <p className="text-slate-500 text-[11px]">Filter emails into Meetings, Deadlines, Offers, Spam, and more.</p>
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-[#E7E7E4] flex items-center gap-2.5">
-                  <div className="p-1 rounded bg-amber-100 text-amber-600">
-                    <Calendar className="w-3.5 h-3.5" />
+                <div className="p-3 rounded-xl bg-slate-50 border border-[#E7E7E4] flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-slate-200 text-slate-700">
+                    <Calendar className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-semibold text-slate-800">Deep Link to Emails</span>
-                    <p className="text-slate-500 text-[11px]">Click any card to read original message context or jump to thread.</p>
+                    <span className="font-bold text-slate-800">Deep Link to Emails</span>
+                    <p className="text-slate-500 text-[11px]">Click any card to view context or open the original message.</p>
                   </div>
                 </div>
               </div>
@@ -230,12 +227,12 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
         </div>
 
         {/* Modal Action Bar */}
-        <div className="p-4 border-t border-[#E7E7E4] bg-slate-50/50 flex items-center justify-between">
+        <div className="p-4 border-t border-[#E7E7E4] bg-slate-50/50 flex items-center justify-between min-h-[64px]">
           {step > 1 ? (
             <button
               type="button"
               onClick={() => setStep((step - 1) as 1 | 2)}
-              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900"
+              className="px-4 py-2.5 text-xs font-semibold text-slate-600 hover:text-slate-900 min-h-[44px]"
             >
               Back
             </button>
@@ -247,7 +244,7 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
             id="onboarding-next-btn"
             type="button"
             onClick={handleNext}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-orange-600 hover:bg-orange-700 shadow-sm transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-[#C2542D] hover:bg-[#B14A27] shadow-xs transition-all min-h-[44px]"
           >
             <span>{step === 3 ? 'Start Initial Scan' : 'Next Step'}</span>
             <ArrowRight className="w-3.5 h-3.5" />

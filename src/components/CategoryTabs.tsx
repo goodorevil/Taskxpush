@@ -29,6 +29,7 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
 }) => {
   const [activeCategory, setActiveCategory] = useState<TaskCategory>('Meeting/Interview');
 
+  // Compute total counts per category
   const countsByCategory = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const cat of CATEGORIES) counts[cat] = 0;
@@ -36,6 +37,7 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
     return counts;
   }, [tasks]);
 
+  // Tasks matching currently selected category tab
   const visibleTasks = useMemo(
     () => tasks.filter((t) => t.category === activeCategory),
     [tasks, activeCategory]
@@ -43,34 +45,38 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      {/* Category tab row */}
-      <div className="flex gap-2 flex-wrap mb-4">
+      {/* 1 Category Tab Row (Sole Category Navigation in App) */}
+      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-3 mb-4 shrink-0">
         {CATEGORIES.map((cat) => {
           const style = getCategoryStyle(cat);
           const isActive = cat === activeCategory;
+          const count = countsByCategory[cat] || 0;
+
           return (
             <button
               key={cat}
               type="button"
               onClick={() => setActiveCategory(cat)}
-              className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
+              className={`inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-full border shrink-0 transition-all min-h-[44px] ${
                 isActive
-                  ? `${style.bg} ${style.text} ${style.border} border`
-                  : 'bg-white text-slate-500 border-[#E7E7E4] hover:border-slate-300'
+                  ? `${style.bg} ${style.text} ${style.border} font-bold ring-1 ring-slate-400/20`
+                  : 'bg-[#F4F4F0] text-slate-600 border-[#E7E7E4] hover:bg-[#EBEBE6] hover:text-slate-800'
               }`}
             >
-              {cat} <span className="opacity-60">&middot; {countsByCategory[cat] || 0}</span>
+              <span className={`w-2 h-2 rounded-full ${style.dotColor}`} />
+              <span>{cat}</span>
+              <span className="text-[11px] opacity-70 font-normal">&middot; {count}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Flat task list for the active category */}
-      <div className="flex flex-col gap-2 overflow-y-auto flex-1">
+      {/* Flat task list for selected category */}
+      <div className="flex flex-col gap-2.5 overflow-y-auto flex-1 pr-1">
         {visibleTasks.length === 0 && (
-          <div className="flex-1 flex flex-col items-center justify-center py-16 text-slate-400">
-            <Inbox className="w-8 h-8 mb-2 opacity-40" />
-            <p className="text-sm font-medium">Nothing here yet</p>
+          <div className="flex-1 flex flex-col items-center justify-center py-20 text-slate-400">
+            <Inbox className="w-8 h-8 mb-2.5 opacity-40 text-slate-400" />
+            <p className="text-sm font-medium">nothing here yet</p>
           </div>
         )}
 
@@ -82,60 +88,66 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
             <div
               key={task.id}
               onClick={() => onTaskClick(task)}
-              className={`flex items-center gap-3 bg-white border border-[#E7E7E4] rounded-xl px-4 py-3 cursor-pointer hover:border-slate-300 transition-colors ${
-                isDone ? 'opacity-50' : ''
+              className={`flex items-center gap-3 bg-white border border-[#E7E7E4] rounded-xl px-4 py-3 cursor-pointer hover:border-slate-300 transition-colors shadow-2xs min-h-[64px] ${
+                isDone ? 'opacity-50 bg-slate-50/70 border-dashed' : ''
               }`}
             >
+              {/* Checkbox toggle with min 44px touch target */}
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onStatusChange(task.id, isDone ? 'todo' : 'done');
                 }}
-                className="text-slate-400 hover:text-orange-600 transition-colors shrink-0"
-                aria-label="Mark done"
+                className="text-slate-400 hover:text-[#C2542D] transition-colors shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center -ml-2"
+                aria-label={isDone ? 'Mark to do' : 'Mark completed'}
               >
                 {isDone ? (
-                  <CheckCircle2 className="w-4.5 h-4.5 text-emerald-500 fill-emerald-50" />
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 fill-emerald-50" />
                 ) : (
-                  <Circle className="w-4.5 h-4.5" />
+                  <Circle className="w-5 h-5" />
                 )}
               </button>
 
-              <div className="flex-1 min-w-0">
-                <div className={`text-sm font-semibold text-slate-800 truncate ${isDone ? 'line-through text-slate-400 font-normal' : ''}`}>
+              {/* Title & Sender metadata */}
+              <div className="flex-1 min-w-0 py-0.5">
+                <div className={`text-sm font-bold text-slate-800 truncate ${isDone ? 'line-through text-slate-400 font-normal' : ''}`}>
                   {task.title}
                 </div>
-                {task.sourceEmail && (
-                  <div className="text-[11px] text-slate-400 flex items-center gap-1.5 mt-0.5 truncate">
-                    <Mail className="w-3 h-3 shrink-0" />
+                {task.sourceEmail ? (
+                  <div className="text-xs text-slate-500 flex items-center gap-1.5 mt-1 truncate">
+                    <Mail className="w-3.5 h-3.5 shrink-0 text-slate-400" />
                     <span className="truncate">{task.sourceEmail.senderName}</span>
                     {task.sourceEmail.webLink && (
                       <a
                         href={task.sourceEmail.webLink}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer noopener"
                         onClick={(e) => e.stopPropagation()}
-                        className="hover:text-orange-600 shrink-0 flex items-center gap-0.5"
+                        className="hover:text-[#C2542D] shrink-0 flex items-center gap-1 font-medium ml-1"
                       >
                         <ExternalLink className="w-3 h-3" /> view email
                       </a>
                     )}
                   </div>
+                ) : (
+                  <div className="text-xs text-slate-400 mt-0.5 italic">Self-created</div>
                 )}
               </div>
 
+              {/* Due Date pill (if present) */}
               {task.dueDate && !isDone && (
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded shrink-0 ${dueInfo.pillColor}`}>
+                <span className={`text-xs font-bold px-2.5 py-1 rounded-lg shrink-0 ${dueInfo.pillColor}`}>
                   {dueInfo.label}
                 </span>
               )}
 
+              {/* Editable Category Dropdown */}
               <select
                 value={task.category}
                 onClick={(e) => e.stopPropagation()}
                 onChange={(e) => onCategoryChange(task.id, e.target.value as TaskCategory)}
-                className="text-xs border border-[#E7E7E4] rounded-lg py-1 px-2 bg-slate-50 text-slate-600 shrink-0 outline-none focus:ring-2 focus:ring-orange-500"
+                className="text-xs font-medium border border-[#E7E7E4] rounded-lg py-2 px-2.5 bg-slate-50 text-slate-700 shrink-0 outline-none focus:ring-2 focus:ring-[#C2542D] min-h-[44px]"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>

@@ -11,7 +11,6 @@ import {
   ScanConfig, 
   ScanProgress, 
   TaskCategory, 
-  TaskPriority, 
   TaskStatus, 
   EmailSource 
 } from './types';
@@ -53,11 +52,8 @@ export default function App() {
   const [config, setConfig] = useState<ScanConfig>(getStoredConfig());
   const [initialized, setInitialized] = useState(false);
 
-  // UI state
-  const [viewMode, setViewMode] = useState<'kanban' | 'list' | 'calendar'>('kanban');
+  // Filter state
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<TaskCategory | 'all'>('all');
-  const [selectedPriority, setSelectedPriority] = useState<TaskPriority | 'all'>('all');
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<'all' | 'active' | 'done'>('all');
 
   // Modals & Drawers
@@ -145,7 +141,6 @@ export default function App() {
       setIsConnecting(false);
 
       showToast(`Connected Gmail: ${userEmail}`, 'success');
-      // Trigger initial scan
       setTimeout(() => {
         handleScanInbox(newAccount);
       }, 400);
@@ -192,10 +187,10 @@ export default function App() {
   // Try Demo Workspace
   const handleTryDemo = () => {
     const demoAcc: ConnectedAccount = {
-      id: 'acc-demo-gmail',
+      id: 'acc-demo-workspace',
       provider: 'demo',
-      email: 'demo-workspace@example.com',
-      name: 'Demo workspace (sample data)',
+      email: 'demo@inboxflow.sample',
+      name: 'Demo Workspace',
       connectedAt: new Date().toISOString(),
       lastSyncedAt: new Date().toISOString(),
       isTestMode: true,
@@ -206,7 +201,7 @@ export default function App() {
     }
     setActiveAccountIdState(demoAcc.id);
     setActiveAccountId(demoAcc.id);
-    showToast('Loaded demo workspace with sample emails - this is not your real inbox', 'info');
+    showToast('Loaded demo workspace with sample emails - sample data only', 'info');
   };
 
   // Scan & Extract Actionable Tasks
@@ -283,26 +278,24 @@ export default function App() {
 
           for (const res of extractionRes.results) {
             const originalEmail = batch.find((e) => e.id === res.emailId || e.threadId === res.threadId);
-            {
-              const newTask: InboxTask = {
-                id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
-                title: res.taskTitle || originalEmail?.subject || '(No subject)',
-                description: res.description || originalEmail?.snippet,
-                dueDate: res.dueDate || null,
-                dueTime: res.dueTime || null,
-                priority: res.priority || 'medium',
-                category: res.category || 'General',
-                status: 'todo',
-                confidence: res.confidence || 0.85,
-                reason: res.reason,
-                actionItems: res.actionItems || [],
-                sourceEmail: originalEmail,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                accountId: targetAccount.id,
-              };
-              newTasks.push(newTask);
-            }
+            const newTask: InboxTask = {
+              id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
+              title: res.taskTitle || originalEmail?.subject || '(No subject)',
+              description: res.description || originalEmail?.snippet,
+              dueDate: res.dueDate || null,
+              dueTime: res.dueTime || null,
+              priority: res.priority || 'medium',
+              category: res.category || 'General',
+              status: 'todo',
+              confidence: res.confidence || 0.85,
+              reason: res.reason,
+              actionItems: res.actionItems || [],
+              sourceEmail: originalEmail,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              accountId: targetAccount.id,
+            };
+            newTasks.push(newTask);
           }
 
           setScanProgress((prev) => ({
@@ -312,7 +305,6 @@ export default function App() {
             skippedEmails: skippedCount,
           }));
 
-          // Small delay for UI cadence
           await new Promise((r) => setTimeout(r, 200));
         }
 
@@ -326,8 +318,12 @@ export default function App() {
         );
         setAccounts(updatedAccounts);
 
-        // Prepend new tasks
-        setTasks((prev) => [...newTasks, ...prev]);
+        // Prepend new tasks & save
+        setTasks((prev) => {
+          const combined = [...newTasks, ...prev];
+          saveStoredTasks(combined);
+          return combined;
+        });
 
         setScanProgress((prev) => ({ ...prev, isScanning: false }));
 
@@ -361,10 +357,10 @@ export default function App() {
     return () => clearInterval(interval);
   }, [config.autoSync, config.autoSyncIntervalMin, activeAccount, handleScanInbox]);
 
-  // Task Status Update (with completion celebration)
+  // Task Status Update (persist to storage immediately)
   const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
-    setTasks((prev) =>
-      prev.map((t) => {
+    setTasks((prev) => {
+      const updated = prev.map((t) => {
         if (t.id === taskId) {
           if (newStatus === 'done' && t.status !== 'done') {
             confetti({
@@ -381,22 +377,21 @@ export default function App() {
           };
         }
         return t;
-      })
-    );
+      });
+      saveStoredTasks(updated);
+      return updated;
+    });
   };
 
-  // Drag & Drop
-  const handleDropTask = (taskId: string, targetStatus: TaskStatus) => {
-    handleStatusChange(taskId, targetStatus);
-  };
-
-  // Manual category override
+  // Manual category override (persist to storage immediately)
   const handleCategoryChange = (taskId: string, newCategory: TaskCategory) => {
-    setTasks((prev) =>
-      prev.map((t) =>
+    setTasks((prev) => {
+      const updated = prev.map((t) =>
         t.id === taskId ? { ...t, category: newCategory, updatedAt: new Date().toISOString() } : t
-      )
-    );
+      );
+      saveStoredTasks(updated);
+      return updated;
+    });
   };
 
   // Add Manual Task
@@ -408,27 +403,31 @@ export default function App() {
       updatedAt: new Date().toISOString(),
       accountId: activeAccount?.id,
     };
-    setTasks((prev) => [newTask, ...prev]);
-    showToast('Task added successfully', 'success');
+    setTasks((prev) => {
+      const updated = [newTask, ...prev];
+      saveStoredTasks(updated);
+      return updated;
+    });
+    showToast('Task created', 'success');
   };
 
   // Update Task
   const handleUpdateTask = (updatedTask: InboxTask) => {
-    setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    setTasks((prev) => {
+      const updated = prev.map((t) => (t.id === updatedTask.id ? updatedTask : t));
+      saveStoredTasks(updated);
+      return updated;
+    });
     showToast('Task updated', 'success');
-  };
-
-  // Update Task Due Date (Scheduling)
-  const handleUpdateDueDate = (taskId: string, newDueDate: string | null) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === taskId ? { ...t, dueDate: newDueDate, updatedAt: new Date().toISOString() } : t))
-    );
-    showToast(newDueDate ? 'Task deadline scheduled' : 'Task unscheduled', 'success');
   };
 
   // Delete Task
   const handleDeleteTask = (taskId: string) => {
-    setTasks((prev) => prev.filter((t) => t.id !== taskId));
+    setTasks((prev) => {
+      const updated = prev.filter((t) => t.id !== taskId);
+      saveStoredTasks(updated);
+      return updated;
+    });
     showToast('Task removed', 'info');
   };
 
@@ -456,9 +455,8 @@ export default function App() {
   // Filtered & Searched Tasks list
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
-      // Account filter (if active account exists)
+      // Account filter
       if (activeAccount && task.accountId && task.accountId !== activeAccount.id) {
-        // Show tasks matching active account
         return false;
       }
 
@@ -474,16 +472,6 @@ export default function App() {
         }
       }
 
-      // Category filter
-      if (selectedCategory !== 'all' && task.category !== selectedCategory) {
-        return false;
-      }
-
-      // Priority filter
-      if (selectedPriority !== 'all' && task.priority !== selectedPriority) {
-        return false;
-      }
-
       // Status filter
       if (selectedStatusFilter === 'active' && task.status === 'done') {
         return false;
@@ -494,9 +482,9 @@ export default function App() {
 
       return true;
     });
-  }, [tasks, activeAccount, searchQuery, selectedCategory, selectedPriority, selectedStatusFilter]);
+  }, [tasks, activeAccount, searchQuery, selectedStatusFilter]);
 
-  // If no account connected yet, display high-craft Landing / Connect screen
+  // If no account connected yet, display Landing / Connect screen
   if (accounts.length === 0) {
     return (
       <>
@@ -531,12 +519,12 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen bg-[#FAFAF9] text-slate-800 overflow-hidden font-sans antialiased">
+    <div className="flex h-screen bg-[#FAFAF7] text-slate-800 overflow-hidden font-sans antialiased">
       {/* Toast Notification */}
       {toastMessage && (
         <div
           id="toast-notification"
-          className={`fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 ${
+          className={`fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl shadow-lg text-xs font-bold flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 ${
             toastMessage.type === 'error'
               ? 'bg-rose-600 text-white'
               : toastMessage.type === 'success'
@@ -551,12 +539,8 @@ export default function App() {
       {/* Left Sidebar */}
       <Sidebar
         tasks={tasks}
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
         selectedStatusFilter={selectedStatusFilter}
         onSelectStatusFilter={setSelectedStatusFilter}
-        viewMode={viewMode}
-        onSelectViewMode={setViewMode}
         accounts={accounts}
         activeAccount={activeAccount}
         onSelectAccount={(acc) => {
@@ -575,14 +559,8 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Top Navbar */}
         <Navbar
-          viewMode={viewMode}
-          onToggleViewMode={setViewMode}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          selectedPriority={selectedPriority}
-          onSelectPriority={setSelectedPriority}
           onRefresh={() => handleScanInbox()}
           isScanning={scanProgress.isScanning}
           lastSyncedAt={activeAccount?.lastSyncedAt}

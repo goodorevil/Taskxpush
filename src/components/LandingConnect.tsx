@@ -1,13 +1,8 @@
 import React from 'react';
 import { 
-  Mail, 
-  Sparkles, 
   ArrowRight, 
   ShieldCheck, 
-  CheckCircle2, 
-  Layers, 
   Clock, 
-  Tag, 
   Inbox, 
   Filter,
   Info
@@ -29,11 +24,11 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
   isConnecting,
 }) => {
   return (
-    <div className="min-h-screen bg-[#FAFAF9] text-slate-800 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#FAFAF7] text-slate-800 flex flex-col justify-between font-sans">
       {/* Top Brand Bar */}
-      <header className="w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+      <header className="w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between min-h-[64px]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-orange-600 flex items-center justify-center text-white shadow-sm shadow-orange-600/20">
+          <div className="w-8 h-8 rounded-xl bg-[#C2542D] flex items-center justify-center text-white shadow-xs">
             <Inbox className="w-4 h-4" />
           </div>
           <span className="text-base font-bold tracking-tight text-slate-900">
@@ -44,9 +39,9 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
         <button
           type="button"
           onClick={onOpenOAuthGuide}
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors min-h-[44px] px-3"
         >
-          <Info className="w-3.5 h-3.5" />
+          <Info className="w-4 h-4" />
           <span>OAuth Setup Guide</span>
         </button>
       </header>
@@ -54,17 +49,17 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
       {/* Main Hero & Value Proposition */}
       <main className="w-full max-w-4xl mx-auto px-6 py-8 flex flex-col items-center text-center">
         {/* Scope pill */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-xs font-medium text-orange-700 mb-6">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>AI-Powered Email-to-Action Engine</span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/70 border border-orange-200 text-xs font-bold text-[#C2542D] mb-6">
+          <Filter className="w-3.5 h-3.5" />
+          <span>Email-to-Action Engine</span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 max-w-2xl leading-[1.15] mb-5">
-          Turn your messy inbox into a clean, prioritized to-do list.
+          Turn your inbox into structured, actionable categories.
         </h1>
 
         <p className="text-sm sm:text-base text-slate-600 max-w-xl leading-relaxed mb-8">
-          InboxFlow securely scans your recent emails, automatically filters out newsletters and receipts, and extracts deadlines, meeting invites, and action items into a Kanban board.
+          InboxFlow scans recent emails and automatically sorts every message into 8 clear categories — meetings, offers, deadlines, reply needed, and spam — so nothing is dropped.
         </p>
 
         {/* Primary Connection Actions */}
@@ -75,7 +70,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
             type="button"
             disabled={isConnecting}
             onClick={onConnectGmail}
-            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-white text-slate-800 border border-[#E7E7E4] hover:bg-slate-50 font-semibold text-sm shadow-sm transition-all active:scale-[0.98] disabled:opacity-60"
+            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-white text-slate-800 border border-[#E7E7E4] hover:bg-slate-50 font-bold text-xs shadow-xs transition-all min-h-[44px] disabled:opacity-60"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
@@ -104,7 +99,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
             type="button"
             disabled={isConnecting}
             onClick={onConnectOutlook}
-            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-white text-slate-800 border border-[#E7E7E4] hover:bg-slate-50 font-semibold text-sm shadow-sm transition-all active:scale-[0.98] disabled:opacity-60"
+            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-white text-slate-800 border border-[#E7E7E4] hover:bg-slate-50 font-bold text-xs shadow-xs transition-all min-h-[44px] disabled:opacity-60"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#0078D4" d="M1 4.5l10-2v19l-10-2z" />
@@ -116,54 +111,54 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
         </div>
 
         {/* Instant Demo Sandbox option */}
-        <div className="flex items-center gap-2 mb-10">
-          <span className="text-xs text-slate-500">Or test with real email samples:</span>
+        <div className="flex items-center gap-2 mb-10 min-h-[44px]">
+          <span className="text-xs text-slate-500 font-medium">Or test with sample data:</span>
           <button
             id="landing-try-demo-btn"
             type="button"
             onClick={onTryDemo}
-            className="inline-flex items-center gap-1 text-xs font-semibold text-orange-600 hover:underline"
+            className="inline-flex items-center gap-1 text-xs font-bold text-[#C2542D] hover:underline"
           >
             <span>Explore Demo Workspace</span>
-            <ArrowRight className="w-3 h-3" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Feature Highlights Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full text-left max-w-3xl">
-          <div className="p-4 rounded-xl bg-white border border-[#E7E7E4] shadow-xs">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
+          <div className="p-5 rounded-xl bg-white border border-[#E7E7E4] shadow-2xs">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
               <Filter className="w-4 h-4" />
             </div>
-            <h4 className="text-xs font-semibold text-slate-800 mb-1">
-              Zero Noise Filtering
+            <h4 className="text-xs font-bold text-slate-900 mb-1">
+              8 Organizing Categories
             </h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Newsletters, marketing blasts, and receipts are automatically skipped. Only actionable items make the board.
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Every email is sorted into Meetings, Offers, Events, Deadlines, Replies Needed, Opportunities, General, or Spam.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-white border border-[#E7E7E4] shadow-xs">
-            <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mb-2.5">
+          <div className="p-5 rounded-xl bg-white border border-[#E7E7E4] shadow-2xs">
+            <div className="w-8 h-8 rounded-lg bg-orange-50 text-[#C2542D] flex items-center justify-center mb-3">
               <Clock className="w-4 h-4" />
             </div>
-            <h4 className="text-xs font-semibold text-slate-800 mb-1">
-              Parsed Deadlines & Times
+            <h4 className="text-xs font-bold text-slate-900 mb-1">
+              Parsed Deadlines
             </h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Relative phrasing like "by Friday at 5 PM" or "tomorrow morning" is converted to exact calendar due dates.
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Relative dates like "by Friday at 5 PM" are converted to clear calendar deadlines on task cards.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-white border border-[#E7E7E4] shadow-xs">
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mb-2.5">
+          <div className="p-5 rounded-xl bg-white border border-[#E7E7E4] shadow-2xs">
+            <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center mb-3">
               <ShieldCheck className="w-4 h-4" />
             </div>
-            <h4 className="text-xs font-semibold text-slate-800 mb-1">
+            <h4 className="text-xs font-bold text-slate-900 mb-1">
               Read-Only & Secure
             </h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              We only request read permissions. No email deletion, sending, or permanent inbox modification.
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Read-only permissions only. No email deletion, sending, or permanent raw storage.
             </p>
           </div>
         </div>
@@ -171,7 +166,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
 
       {/* Footer */}
       <footer className="w-full max-w-6xl mx-auto px-6 py-6 border-t border-[#E7E7E4] text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <span>InboxFlow · Intelligent Email Productivity</span>
+        <span>InboxFlow · Email Action Engine</span>
         <span>Built with Google Gemini & OAuth 2.0</span>
       </footer>
     </div>

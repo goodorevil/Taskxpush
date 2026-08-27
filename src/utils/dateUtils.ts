@@ -105,60 +105,60 @@ export function getCategoryStyle(category: TaskCategory): {
   switch (category) {
     case 'Meeting/Interview':
       return {
-        bg: 'bg-sky-50',
-        text: 'text-sky-700',
-        border: 'border-sky-100',
-        dotColor: 'bg-sky-500'
+        bg: 'bg-sky-100',
+        text: 'text-sky-800',
+        border: 'border-sky-200',
+        dotColor: 'bg-sky-500',
       };
     case 'Job/Internship offer':
       return {
-        bg: 'bg-emerald-50',
-        text: 'text-emerald-700',
-        border: 'border-emerald-100',
-        dotColor: 'bg-emerald-500'
+        bg: 'bg-emerald-100',
+        text: 'text-emerald-800',
+        border: 'border-emerald-200',
+        dotColor: 'bg-emerald-500',
       };
     case 'Event':
       return {
-        bg: 'bg-pink-50',
-        text: 'text-pink-700',
-        border: 'border-pink-100',
-        dotColor: 'bg-pink-500'
+        bg: 'bg-pink-100',
+        text: 'text-pink-800',
+        border: 'border-pink-200',
+        dotColor: 'bg-pink-500',
       };
     case 'Deadline':
       return {
-        bg: 'bg-red-50',
-        text: 'text-red-700',
-        border: 'border-red-100',
-        dotColor: 'bg-red-500'
+        bg: 'bg-red-100',
+        text: 'text-red-800',
+        border: 'border-red-200',
+        dotColor: 'bg-red-500',
       };
     case 'Reply Needed':
       return {
-        bg: 'bg-amber-50',
-        text: 'text-amber-700',
-        border: 'border-amber-100',
-        dotColor: 'bg-amber-500'
+        bg: 'bg-amber-100',
+        text: 'text-amber-800',
+        border: 'border-amber-200',
+        dotColor: 'bg-amber-500',
       };
     case 'Opportunity':
       return {
-        bg: 'bg-teal-50',
-        text: 'text-teal-700',
-        border: 'border-teal-100',
-        dotColor: 'bg-teal-500'
+        bg: 'bg-teal-100',
+        text: 'text-teal-800',
+        border: 'border-teal-200',
+        dotColor: 'bg-teal-500',
       };
     case 'Spam':
       return {
-        bg: 'bg-stone-100',
-        text: 'text-stone-500',
-        border: 'border-stone-200',
-        dotColor: 'bg-stone-400'
+        bg: 'bg-stone-200',
+        text: 'text-stone-700',
+        border: 'border-stone-300',
+        dotColor: 'bg-stone-500',
       };
     case 'General':
     default:
       return {
-        bg: 'bg-slate-100',
-        text: 'text-slate-700',
-        border: 'border-slate-200',
-        dotColor: 'bg-slate-400'
+        bg: 'bg-slate-200',
+        text: 'text-slate-800',
+        border: 'border-slate-300',
+        dotColor: 'bg-slate-500',
       };
   }
 }

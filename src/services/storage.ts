@@ -49,7 +49,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     },
     createdAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
     updatedAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
-    accountId: 'acc-demo-gmail'
+    accountId: 'acc-demo-workspace'
   },
   {
     id: 'task-seed-2',
@@ -80,7 +80,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     },
     createdAt: new Date(Date.now() - 1000 * 60 * 80).toISOString(),
     updatedAt: new Date(Date.now() - 1000 * 60 * 80).toISOString(),
-    accountId: 'acc-demo-gmail'
+    accountId: 'acc-demo-workspace'
   },
   {
     id: 'task-seed-3',
@@ -110,7 +110,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     },
     createdAt: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
     updatedAt: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
-    accountId: 'acc-demo-gmail'
+    accountId: 'acc-demo-workspace'
   },
   {
     id: 'task-seed-4',
@@ -140,7 +140,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     },
     createdAt: new Date(Date.now() - 1000 * 60 * 500).toISOString(),
     updatedAt: new Date(Date.now() - 1000 * 60 * 500).toISOString(),
-    accountId: 'acc-demo-gmail'
+    accountId: 'acc-demo-workspace'
   },
   {
     id: 'task-seed-5',
@@ -171,16 +171,15 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     createdAt: new Date(Date.now() - 1000 * 60 * 1100).toISOString(),
     updatedAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
     completedAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
-    accountId: 'acc-demo-gmail'
+    accountId: 'acc-demo-workspace'
   }
 ];
 
 const INITIAL_DEMO_ACCOUNT: ConnectedAccount = {
-  id: 'acc-demo-gmail',
-  provider: 'gmail',
-  email: 'saurabhkdubey.work@gmail.com',
-  name: 'Saurabh Dubey',
-  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces',
+  id: 'acc-demo-workspace',
+  provider: 'demo',
+  email: 'demo@inboxflow.sample',
+  name: 'Demo Workspace',
   connectedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
   lastSyncedAt: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
   isTestMode: true
