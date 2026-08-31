@@ -189,7 +189,7 @@ export default function App() {
     const demoAcc: ConnectedAccount = {
       id: 'acc-demo-workspace',
       provider: 'demo',
-      email: 'demo@inboxflow.sample',
+      email: 'demo@prioris.sample',
       name: 'Demo Workspace',
       connectedAt: new Date().toISOString(),
       lastSyncedAt: new Date().toISOString(),

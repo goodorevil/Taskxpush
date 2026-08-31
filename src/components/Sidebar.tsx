@@ -72,7 +72,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div>
               <span className="text-sm font-bold tracking-tight text-slate-900 block">
-                InboxFlow
+                Prioris
               </span>
               <span className="text-[11px] text-slate-500 font-medium block">
                 Email Action Engine

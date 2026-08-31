@@ -1,11 +1,11 @@
 import { ConnectedAccount, InboxTask, ScanConfig, TaskStatus, TaskPriority, TaskCategory, EmailSource } from '../types';
 
-const TASKS_KEY = 'inboxflow_tasks_v1';
-const ACCOUNTS_KEY = 'inboxflow_accounts_v1';
-const ACTIVE_ACCOUNT_KEY = 'inboxflow_active_account_v1';
-const CONFIG_KEY = 'inboxflow_config_v1';
-const ONBOARDING_KEY = 'inboxflow_onboarding_done_v1';
-const PROCESSED_THREADS_KEY = 'inboxflow_processed_threads_v1';
+const TASKS_KEY = 'prioris_tasks_v1';
+const ACCOUNTS_KEY = 'prioris_accounts_v1';
+const ACTIVE_ACCOUNT_KEY = 'prioris_active_account_v1';
+const CONFIG_KEY = 'prioris_config_v1';
+const ONBOARDING_KEY = 'prioris_onboarding_done_v1';
+const PROCESSED_THREADS_KEY = 'prioris_processed_threads_v1';
 
 export const DEFAULT_CONFIG: ScanConfig = {
   scanLimit: 50,
@@ -178,7 +178,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
 const INITIAL_DEMO_ACCOUNT: ConnectedAccount = {
   id: 'acc-demo-workspace',
   provider: 'demo',
-  email: 'demo@inboxflow.sample',
+  email: 'demo@prioris.sample',
   name: 'Demo Workspace',
   connectedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
   lastSyncedAt: new Date(Date.now() - 1000 * 60 * 12).toISOString(),

@@ -27,7 +27,7 @@ export const ScanningModal: React.FC<ScanningModalProps> = ({ progress }) => {
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-800">
-              InboxFlow is Scanning Emails
+              Prioris is Scanning Emails
             </h3>
             <p className="text-xs text-slate-500">
               Analyzing subject lines & bodies for action items...

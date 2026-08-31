@@ -256,7 +256,7 @@ async function startServer() {
         content: (em.fullBody || em.snippet || "").slice(0, 1500)
       }));
 
-      const systemPrompt = `You are InboxFlow AI, an intelligent email sorting assistant.
+      const systemPrompt = `You are Prioris AI, an intelligent email sorting assistant.
 Your job is to scan incoming emails and sort EVERY SINGLE ONE into exactly one category. Nothing gets dropped or hidden - every email must end up somewhere.
 
 Current Date Reference: ${today} (Year-Month-Day).
@@ -414,7 +414,7 @@ ${JSON.stringify(formattedEmailBatch, null, 2)}`;
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`InboxFlow server running on http://0.0.0.0:${PORT}`);
+    console.log(`Prioris server running on http://0.0.0.0:${PORT}`);
   });
 }
 

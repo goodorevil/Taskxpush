@@ -32,7 +32,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
             <Inbox className="w-4 h-4" />
           </div>
           <span className="text-base font-bold tracking-tight text-slate-900">
-            InboxFlow
+            Prioris
           </span>
         </div>
 
@@ -59,7 +59,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
         </h1>
 
         <p className="text-sm sm:text-base text-slate-600 max-w-xl leading-relaxed mb-8">
-          InboxFlow scans recent emails and automatically sorts every message into 8 clear categories — meetings, offers, deadlines, reply needed, and spam — so nothing is dropped.
+          Prioris scans recent emails and automatically sorts every message into 8 clear categories — meetings, offers, deadlines, reply needed, and spam — so nothing is dropped.
         </p>
 
         {/* Primary Connection Actions */}
@@ -166,7 +166,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
 
       {/* Footer */}
       <footer className="w-full max-w-6xl mx-auto px-6 py-6 border-t border-[#E7E7E4] text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <span>InboxFlow · Email Action Engine</span>
+        <span>Prioris · Email Action Engine</span>
         <span>Built with Google Gemini & OAuth 2.0</span>
       </footer>
     </div>

@@ -95,10 +95,10 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h2 className="text-lg font-bold text-slate-800">
-                Welcome to InboxFlow
+                Welcome to Prioris
               </h2>
               <p className="text-xs text-slate-600 leading-relaxed">
-                InboxFlow connects with your inbox to automatically isolate action items, contract reviews, deadlines, and replies owed so you never drop an important commitment.
+                Prioris connects with your inbox to automatically isolate action items, contract reviews, deadlines, and replies owed so you never drop an important commitment.
               </p>
 
               <div className="p-3.5 rounded-xl bg-slate-50 border border-[#E7E7E4] space-y-2 text-xs">
@@ -107,7 +107,7 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 </div>
                 <div className="flex items-start gap-2 text-slate-600 font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>Read-only scope — InboxFlow cannot delete or send emails.</span>
+                  <span>Read-only scope — Prioris cannot delete or send emails.</span>
                 </div>
                 <div className="flex items-start gap-2 text-slate-600 font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />

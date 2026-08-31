@@ -64,7 +64,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <Settings className="w-4 h-4" />
             </div>
             <h2 className="text-base font-bold text-slate-800">
-              InboxFlow Settings
+              Prioris Settings
             </h2>
           </div>
           <button
@@ -275,7 +275,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   <span>Privacy & Storage Principles</span>
                 </div>
                 <p className="text-slate-600 leading-relaxed text-xs font-medium">
-                  • InboxFlow does not store your full raw email contents in external databases.<br/>
+                  • Prioris does not store your full raw email contents in external databases.<br/>
                   • Tokens are kept securely on client session or transient server memory.<br/>
                   • You can clear all cached tasks and wipe application storage in one click below.
                 </p>

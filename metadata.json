@@ -1,5 +1,5 @@
 {
-  "name": "InboxFlow",
+  "name": "Prioris",
   "description": "Connects to Gmail or Outlook to automatically scan incoming emails and extract actionable tasks into a prioritized, categorized to-do list using AI.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
