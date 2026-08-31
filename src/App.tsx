@@ -240,12 +240,14 @@ export default function App() {
 
         const touchLastSynced = () => {
           const nowIso = new Date().toISOString();
-          const updatedAccounts = accounts.map((acc) =>
+          setAccounts((prevAccounts) => {
+           const updatedAccounts = prevAccounts.map((acc) =>
             acc.id === targetAccount.id ? { ...acc, lastSyncedAt: nowIso } : acc
-          );
-          setAccounts(updatedAccounts);
-          saveStoredAccounts(updatedAccounts);
-        };
+           );
+           saveStoredAccounts(updatedAccounts);
+           return updatedAccounts;
+         });
+       };
 
         if (emails.length === 0) {
           touchLastSynced();
@@ -514,7 +516,14 @@ export default function App() {
             setConfig(cfg);
             saveStoredConfig(cfg);
           }}
-          onStartFirstScan={() => handleTryDemo()}
+
+          onStartFirstScan={() => {
+            if (accounts.length > 0) {
+             handleScanInbox(activeAccount);
+            } else {
+             handleTryDemo();
+           }
+          }}
         />
 
         <OAuthGuideModal

@@ -114,6 +114,7 @@ export async function fetchGmailMessages(
     }
 
     const listData = await listRes.json();
+    console.log('GMAIL API RESPONSE:', listData);
     const messageHeaders = listData.messages || [];
 
     if (messageHeaders.length === 0) {

@@ -209,10 +209,7 @@ export function getStoredAccounts(): ConnectedAccount[] {
   if (typeof window === 'undefined') return [];
   const raw = localStorage.getItem(ACCOUNTS_KEY);
   if (!raw) {
-    // Seed initial demo account
-    localStorage.setItem(ACCOUNTS_KEY, JSON.stringify([INITIAL_DEMO_ACCOUNT]));
-    localStorage.setItem(ACTIVE_ACCOUNT_KEY, INITIAL_DEMO_ACCOUNT.id);
-    return [INITIAL_DEMO_ACCOUNT];
+    return [];
   }
   try {
     return JSON.parse(raw);

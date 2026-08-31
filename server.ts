@@ -3,6 +3,8 @@ import path from "path";
 import dotenv from "dotenv";
 import { GoogleGenAI, Type } from "@google/genai";
 import { createServer as createViteServer } from "vite";
+import rateLimit from "express-rate-limit";
+import { z } from "zod";
 
 dotenv.config();
 
@@ -181,7 +183,7 @@ async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
-  app.use(express.json({ limit: "10mb" }));
+  app.use(express.json({ limit: "1mb" }));
 
   // Health check endpoint
   app.get("/api/health", (_req: Request, res: Response) => {
@@ -202,12 +204,31 @@ async function startServer() {
   });
 
   // Extract actionable tasks from a batch of emails using Gemini
-  app.post("/api/extract-tasks", async (req: Request, res: Response) => {
+  const EmailSchema = z.object({
+  id: z.string().min(1),
+  subject: z.string().optional(),
+  sender: z.string().optional(),
+  snippet: z.string().optional(),
+  fullBody: z.string().optional(),
+ });
+
+  const ExtractTasksSchema = z.object({
+  emails: z.array(EmailSchema).min(1).max(50),
+  referenceDate: z.string().optional(),
+  });
+  const extractLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  });
+  app.post("/api/extract-tasks", extractLimiter, async (req: Request, res: Response) => {
     try {
-      const { emails, referenceDate } = req.body;
-      if (!emails || !Array.isArray(emails) || emails.length === 0) {
-        return res.status(400).json({ error: "Please provide an array of emails to analyze." });
+      const parseResult = ExtractTasksSchema.safeParse(req.body);
+      if (!parseResult.success) {
+        return res.status(400).json({ error: "Invalid request", details: parseResult.error.flatten() });
       }
+      const { emails, referenceDate } = parseResult.data;
 
       const client = getGeminiClient();
       const today = referenceDate || new Date().toISOString().split("T")[0];
@@ -304,8 +325,24 @@ ${JSON.stringify(formattedEmailBatch, null, 2)}`;
 
         const rawText = response.text || "[]";
         let parsedResults = [];
+
+        const GeminiTaskSchema = z.object({
+          emailId: z.string(),
+          title: z.string(),
+          description: z.string(),
+          category: z.string(),
+          priority: z.string(),
+          dueDate: z.string().nullable(),
+          actionable: z.boolean(),
+          confidence: z.number(),
+          actionItems: z.array(z.string()),
+          skipReason: z.string().optional(),
+        });
+        const GeminiResultsSchema = z.array(GeminiTaskSchema);
+        
         try {
-          parsedResults = JSON.parse(rawText);
+          const jsonResults = JSON.parse(rawText);
+          parsedResults = GeminiResultsSchema.parse(jsonResults);
         } catch (parseErr) {
           console.error("Failed to parse Gemini JSON output:", rawText);
           parsedResults = emails.map(email => fallbackRuleExtractor(email, today));
