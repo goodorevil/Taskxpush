@@ -103,48 +103,45 @@ export function getCategoryStyle(category: TaskCategory): {
   dotColor: string;
 } {
   switch (category) {
-    case 'Meeting/Interview':
+    case 'Engagements':
       return {
         bg: 'bg-sky-100',
         text: 'text-sky-800',
         border: 'border-sky-200',
         dotColor: 'bg-sky-500',
       };
-    case 'Job/Internship offer':
+    case 'Opportunities':
       return {
         bg: 'bg-emerald-100',
         text: 'text-emerald-800',
         border: 'border-emerald-200',
         dotColor: 'bg-emerald-500',
       };
-    case 'Event':
+    case 'Experiences':
       return {
         bg: 'bg-pink-100',
         text: 'text-pink-800',
         border: 'border-pink-200',
         dotColor: 'bg-pink-500',
       };
-    case 'Deadline':
+    case 'Deadlines / Reply':
       return {
         bg: 'bg-red-100',
         text: 'text-red-800',
         border: 'border-red-200',
         dotColor: 'bg-red-500',
       };
-    case 'Reply Needed':
+    case 'Finance':
       return {
-        bg: 'bg-amber-100',
-        text: 'text-amber-800',
-        border: 'border-amber-200',
-        dotColor: 'bg-amber-500',
+        bg: 'bg-emerald-100',
+        text: 'text-emerald-800',
+        border: 'border-emerald-200',
+        dotColor: 'bg-emerald-500',
       };
-    case 'Opportunity':
-      return {
-        bg: 'bg-teal-100',
-        text: 'text-teal-800',
-        border: 'border-teal-200',
-        dotColor: 'bg-teal-500',
-      };
+    case 'Discover':
+      return { bg: 'bg-violet-100', text: 'text-violet-800', border: 'border-violet-200', dotColor: 'bg-violet-500' };
+    case 'Updates':
+      return { bg: 'bg-slate-200', text: 'text-slate-800', border: 'border-slate-300', dotColor: 'bg-slate-500' };
     case 'Spam':
       return {
         bg: 'bg-stone-200',
@@ -152,7 +149,6 @@ export function getCategoryStyle(category: TaskCategory): {
         border: 'border-stone-300',
         dotColor: 'bg-stone-500',
       };
-    case 'General':
     default:
       return {
         bg: 'bg-slate-200',

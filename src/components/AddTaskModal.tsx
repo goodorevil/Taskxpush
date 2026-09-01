@@ -3,13 +3,13 @@ import { X, Plus } from 'lucide-react';
 import { InboxTask, TaskCategory, TaskStatus } from '../types';
 
 const CANONICAL_CATEGORIES: TaskCategory[] = [
-  'Meeting/Interview',
-  'Job/Internship offer',
-  'Event',
-  'Deadline',
-  'Reply Needed',
-  'Opportunity',
-  'General',
+  'Engagements',
+  'Deadlines / Reply',
+  'Opportunities',
+  'Experiences',
+  'Finance',
+  'Discover',
+  'Updates',
   'Spam',
 ];
 
@@ -33,7 +33,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState(defaultDueDate || new Date().toISOString().split('T')[0]);
-  const [category, setCategory] = useState<TaskCategory>('General');
+  const [category, setCategory] = useState<TaskCategory>('Updates');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

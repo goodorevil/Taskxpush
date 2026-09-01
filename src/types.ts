@@ -14,13 +14,13 @@ export interface ConnectedAccount {
 
 export type TaskPriority = 'high' | 'medium' | 'low';
 export type TaskCategory =
-  | 'Meeting/Interview'
-  | 'Job/Internship offer'
-  | 'Event'
-  | 'Deadline'
-  | 'Reply Needed'
-  | 'Opportunity'
-  | 'General'
+  | 'Engagements'
+  | 'Deadlines / Reply'
+  | 'Opportunities'
+  | 'Experiences'
+  | 'Finance'
+  | 'Discover'
+  | 'Updates'
   | 'Spam';
 export type TaskStatus = 'todo' | 'done';
 
@@ -45,6 +45,7 @@ export interface InboxTask {
   dueDate?: string | null; // YYYY-MM-DD format
   dueTime?: string | null;
   priority: TaskPriority;
+  isPrioritySender?: boolean;
   category: TaskCategory;
   status: TaskStatus;
   sourceEmail?: EmailSource;
@@ -86,6 +87,7 @@ export interface ExtractedAIItem {
   dueDate?: string | null;
   dueTime?: string | null;
   priority?: TaskPriority;
+  isPrioritySender?: boolean;
   category?: TaskCategory;
   description?: string;
   actionItems?: string[];

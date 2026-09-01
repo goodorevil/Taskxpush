@@ -27,7 +27,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     dueTime: '17:00',
     priority: 'high',
-    category: 'Deadline',
+    category: 'Deadlines / Reply',
     status: 'todo',
     confidence: 0.96,
     reason: 'Urgent contract approval deadline from Legal Counsel',
@@ -58,7 +58,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     dueDate: new Date().toISOString().split('T')[0],
     dueTime: '18:00',
     priority: 'high',
-    category: 'Deadline',
+    category: 'Deadlines / Reply',
     status: 'todo',
     confidence: 0.94,
     reason: 'High-severity production SRE alert requiring engineering patch',
@@ -89,7 +89,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     dueTime: '14:00',
     priority: 'medium',
-    category: 'Meeting/Interview',
+    category: 'Engagements',
     status: 'todo',
     confidence: 0.91,
     reason: 'Scheduled calendar sync with executive stakeholder',
@@ -119,7 +119,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     dueTime: null,
     priority: 'low',
-    category: 'Reply Needed',
+    category: 'Deadlines / Reply',
     status: 'todo',
     confidence: 0.88,
     reason: 'Direct deliverable request following user research interview',
@@ -149,7 +149,7 @@ const INITIAL_DEMO_TASKS: InboxTask[] = [
     dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     dueTime: '17:00',
     priority: 'medium',
-    category: 'Meeting/Interview',
+    category: 'Deadlines / Reply',
     status: 'done',
     confidence: 0.92,
     reason: 'Recruiting panel score deadline',
@@ -194,7 +194,24 @@ export function getStoredTasks(): InboxTask[] {
     return INITIAL_DEMO_TASKS;
   }
   try {
-    return JSON.parse(raw);
+    const tasks: InboxTask[] = JSON.parse(raw);
+    const categoryMigration: Record<string, TaskCategory> = {
+      'Meeting/Interview': 'Engagements',
+      'Deadline': 'Deadlines / Reply',
+      'Reply Needed': 'Deadlines / Reply',
+      'Job/Internship offer': 'Opportunities',
+      'Opportunity': 'Opportunities',
+      'Event': 'Experiences',
+      'General': 'Updates',
+    };
+    const migratedTasks = tasks.map((task) => {
+      const category = categoryMigration[task.category as string];
+      return category ? { ...task, category } : task;
+    });
+    if (migratedTasks.some((task, index) => task !== tasks[index])) {
+      localStorage.setItem(TASKS_KEY, JSON.stringify(migratedTasks));
+    }
+    return migratedTasks;
   } catch {
     return [];
   }

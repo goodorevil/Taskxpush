@@ -59,7 +59,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
         </h1>
 
         <p className="text-sm sm:text-base text-slate-600 max-w-xl leading-relaxed mb-8">
-          Prioris scans recent emails and automatically sorts every message into 8 clear categories — meetings, offers, deadlines, reply needed, and spam — so nothing is dropped.
+          Prioris sorts every message into eight clear categories, including engagements, deadlines / reply, opportunities, finance, and updates.
         </p>
 
         {/* Primary Connection Actions */}
@@ -134,7 +134,7 @@ export const LandingConnect: React.FC<LandingConnectProps> = ({
               8 Organizing Categories
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Every email is sorted into Meetings, Offers, Events, Deadlines, Replies Needed, Opportunities, General, or Spam.
+              Every email is sorted into Engagements, Deadlines / Reply, Opportunities, Experiences, Finance, Discover, Updates, or Spam.
             </p>
           </div>
 

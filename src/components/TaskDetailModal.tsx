@@ -10,13 +10,13 @@ import { InboxTask, TaskCategory, TaskStatus } from '../types';
 import { getCategoryStyle } from '../utils/dateUtils';
 
 const CANONICAL_CATEGORIES: TaskCategory[] = [
-  'Meeting/Interview',
-  'Job/Internship offer',
-  'Event',
-  'Deadline',
-  'Reply Needed',
-  'Opportunity',
-  'General',
+  'Engagements',
+  'Deadlines / Reply',
+  'Opportunities',
+  'Experiences',
+  'Finance',
+  'Discover',
+  'Updates',
   'Spam',
 ];
 

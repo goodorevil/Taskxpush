@@ -1,16 +1,16 @@
 import React, { useMemo, useState } from 'react';
-import { CheckCircle2, Circle, Mail, ExternalLink, Inbox } from 'lucide-react';
+import { CheckCircle2, Circle, Mail, ExternalLink, Inbox, Star } from 'lucide-react';
 import { InboxTask, TaskCategory, TaskStatus } from '../types';
 import { formatRelativeDueDate, getCategoryStyle } from '../utils/dateUtils';
 
 const CATEGORIES: TaskCategory[] = [
-  'Meeting/Interview',
-  'Job/Internship offer',
-  'Event',
-  'Deadline',
-  'Reply Needed',
-  'Opportunity',
-  'General',
+  'Engagements',
+  'Deadlines / Reply',
+  'Opportunities',
+  'Experiences',
+  'Finance',
+  'Discover',
+  'Updates',
   'Spam',
 ];
 
@@ -27,7 +27,7 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
   onStatusChange,
   onCategoryChange,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<TaskCategory>('Meeting/Interview');
+  const [activeCategory, setActiveCategory] = useState<TaskCategory>('Engagements');
 
   // Compute total counts per category
   const countsByCategory = useMemo(() => {
@@ -114,6 +114,11 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
                 <div className={`text-sm font-bold text-slate-800 truncate ${isDone ? 'line-through text-slate-400 font-normal' : ''}`}>
                   {task.title}
                 </div>
+                {task.isPrioritySender && (
+                  <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-violet-700">
+                    <Star className="w-3 h-3 fill-violet-500 text-violet-500" /> Priority sender
+                  </span>
+                )}
                 {task.sourceEmail ? (
                   <div className="text-xs text-slate-500 flex items-center gap-1.5 mt-1 truncate">
                     <Mail className="w-3.5 h-3.5 shrink-0 text-slate-400" />

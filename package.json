@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
+    ,"test:classification": "tsx tests/classifier.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
